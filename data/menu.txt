@@ -1,0 +1,11 @@
+CocaCola;A habitación;07:00;23:00;4500
+Pepsi;A habitación;07:00;23:00;4500
+Huevos;A habitación;07:00;12:00;9500
+Jugo de naranja;A habitación;07:00;12:00;7500
+Sandwich;A habitación;07:00;22:00;10000
+Cereal;En restaurante;07:00;12:00;8500
+Wafles;A habitación;07:00;12:00;12000
+Pechuga;En restaurante;12:00;16:00;16000
+Carne;En restaurante;12:00;16:00;16000
+Vino;En restaurante;12:00;22:00;12000
+Bandeja Paisa;En restaurante;12:00;22:00;18000

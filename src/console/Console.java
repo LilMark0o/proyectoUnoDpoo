@@ -1,7 +1,6 @@
 package console;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,8 +10,7 @@ import loginApp.Login;
 public class Console {
 	private static Boolean logedIn;
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Login.cargarLogIn();
+	public static void main(String[] args) throws IOException {
 		logedIn = false;
 		System.out.println("Hotel Property Managament System\n");
 		boolean continuar = true;
@@ -40,7 +38,7 @@ public class Console {
 		}
 	}
 
-	public static void logInMenu() {
+	public static void logInMenu() throws IOException {
 		boolean continuarEnOpción = true;
 		while (continuarEnOpción) {
 			try {
@@ -56,21 +54,21 @@ public class Console {
 						System.out.println("Hubo un error iniciando sesión.");
 						logedIn = false;
 					}
-
 				} else if (opcion_seleccionada == 2) {
-					if(logedIn!=true) {
+					if(logedIn==true) {
 						Controller.logOut();
 					}else {
 						System.out.println("Debes iniciar sesión primero");
 					}
 				} else if (opcion_seleccionada == 3) {
-					if(logedIn!=true) {
+					if(logedIn==true) {
 						String newPassword = input("Nueva contraseña: ");
 						Controller.cambiarContrasena(newPassword);
 					}else {
 						System.out.println("Debes iniciar sesión primero");
 					}
 				} else if (opcion_seleccionada == 4) {
+					Login.guardarCambios();
 					System.out.println("Chaolin pin pín	");
 					continuarEnOpción = false;
 				} else {
