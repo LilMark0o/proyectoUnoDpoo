@@ -19,7 +19,7 @@ public class Habitacion {
 		this.tipoHabitacion = tipoHabitacion;
 		this.ID = ID;
 		this.ubicacion = ubicacion;
-		ArrayList<Cama> camas = new ArrayList<Cama>();
+		camas = new ArrayList<Cama>();
 
 		if (tieneBalcon.equals("Sí")) {
 			this.tieneBalcon = true;

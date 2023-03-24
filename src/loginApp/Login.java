@@ -82,10 +82,16 @@ public class Login {
 
 	private static String textoDataBase() {
 		String texto = "";
+		boolean primero = true;
 		for (Map.Entry<String, String> entry : users.entrySet()) {
+			if (primero) {
+				primero = false;
+			} else {
+				texto += "\n";
+			}
 			String key = entry.getKey();
 			String value = entry.getValue();
-			texto += key + ";" + value + "\n";
+			texto += key + ";" + value;
 		}
 		return texto;
 	}

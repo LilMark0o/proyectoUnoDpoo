@@ -1,0 +1,7 @@
+estándar;303;Torre 2;Sí;Sí;No;4;0
+suite;101;Torre 2;Sí;No;Sí;4;2
+suite doble;512;Torre 2;Sí;No;Sí;6;2
+estándar;305;Torre 4;Sí;Sí;No;6;1
+estándar;804;Torre 2;No;No;No;2;0
+suite;312;Torre 1;Sí;Sí;Sí;4;2
+suite doble;416;Torre 4;Sí;No;Sí;6;2
