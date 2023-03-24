@@ -89,7 +89,8 @@ public class Console {
 				if (opcion_seleccionada == 1) {
 					// cargar Archivo
 					if (logedIn == true) {
-						System.out.println(Controller.cargarHabitacionArchivo());
+						String fileName = Controller.input("¿Cúal es el nombre del archivo? ");
+						System.out.println(Controller.cargarHabitacionArchivo(fileName));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
@@ -97,7 +98,45 @@ public class Console {
 				} else if (opcion_seleccionada == 2) {
 					// cargar Individual
 					if (logedIn == true) {
-						System.out.println(Controller.cargarHabitacionManual());
+						String tipoHabitacion = Controller.input(
+								"¿Qué tipo de habitación quiere? (estándar, suite, suite doble) ");
+						String ID = Controller.input("¿Qué ID quiere darle a la habitación? ");
+						String ubicacion = Controller
+								.input("¿Qué ubicación quiere darle a la habitación? (ej: Torre 2) ");
+						String tieneBalcon = Controller.input("¿La habitación tiene balcón? (Sí o No) ");
+						String tieneVista = Controller.input("¿La habitación tiene balcón? (Sí o No) ");
+						String tieneCocina = Controller.input("¿La habitación tiene balcón? (Sí o No) ");
+						int capacidadAdulto = Integer
+								.parseInt(Controller.input("¿Cúal es la capacidad de adultos de la habitación?"));
+						int capacidadNino = Integer
+								.parseInt(Controller.input("¿Cúal es la capacidad de niños de la habitación?"));
+
+						System.out.println(Controller.cargarHabitacionManual(tipoHabitacion, ID, ubicacion,
+								tieneBalcon, tieneVista, tieneCocina, capacidadAdulto, capacidadNino));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 3) {
+					// consultar Habitación
+					if (logedIn == true) {
+						String ID = Controller.input("¿Qué ID de habitación desea buscar?: ");
+						System.out.println(Controller.consultarHabitación(ID));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 4) {
+					// cambiar tarifa :(
+					if (logedIn == true) {
+						String tipoHabitacion = Controller
+								.input("¿Desde tipo de habitación quiere cambiar? (estándar, suite, suite doble): ");
+						String initialDate = Controller.input("¿Desde qué fecha? (ej:2023-03-23): ");
+						String finalDate = Controller.input("¿Hasta qué fecha? (ej:2023-03-23): ");
+						String days = Controller.input("¿Qué días? (en minúscula y con tilde): ");
+						int tarifaNum = Integer
+								.parseInt(Controller.input("¿Cúal es la tarifa a aplicar?"));
+
+						System.out.println(Controller.cambiarTarifa(
+								tipoHabitacion, initialDate, finalDate, days, tarifaNum));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}

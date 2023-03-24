@@ -117,4 +117,28 @@ public class Habitacion {
 	public void setCamas(List<Cama> camas) {
 		this.camas = camas;
 	}
+
+	public String toString() {
+		String resp = "";
+		resp += "La habitación es una " + tipoHabitacion + ", ";
+		resp += "tiene el ID" + ID + ", ";
+		if (tieneBalcon) {
+			resp += "tiene un hermoso balcón, ";
+		} else {
+			resp += "no tiene balcón, ";
+		}
+		if (tieneVista) {
+			resp += "tiene una hermosa vista, ";
+		} else {
+			resp += "no tiene vista, ";
+		}
+		if (tieneCocina) {
+			resp += "tiene una hermosa cocina, ";
+		} else {
+			resp += "no tiene cocina, ";
+		}
+		resp += "le caben " + String.valueOf(capacidadAdulto) + " adultos y ";
+		resp += "le caben " + String.valueOf(capacidadNino) + " niños.";
+		return resp;
+	}
 }

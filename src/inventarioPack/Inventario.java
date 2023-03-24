@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Inventario {
 	private static Map<String, ArrayList<Tarifa>> tarifas;
@@ -37,10 +41,20 @@ public class Inventario {
 		boolean yaExiste = false;
 		for (Habitacion habitacion : habitaciones) {
 			if (habitacion.getID().equals(ID)) {
-				yaExiste = false;
+				yaExiste = true;
 			}
 		}
 		return yaExiste;
+	}
+
+	public static Habitacion habitacionPorID(String ID) {
+		Habitacion habitacionBuscada = null;
+		for (Habitacion habitacion : habitaciones) {
+			if (habitacion.getID().equals(ID)) {
+				habitacionBuscada = habitacion;
+			}
+		}
+		return habitacionBuscada;
 	}
 
 	private static void cargarTarifas() throws FileNotFoundException {
@@ -167,6 +181,147 @@ public class Inventario {
 		scan.close();
 	}
 
+	private static Calendar string2Calendar(String fechaStr) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date fechaDate = null;
+		try {
+			fechaDate = sdf.parse(fechaStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaDate);
+
+		return calendar;
+
+	}
+
+	public static void cambiarTarifa(String tipoHabitacion, String initialDate, String finalDate, String days,
+			// ! esto es horrendo
+			int tarifaNum) {
+		Calendar initialCal = string2Calendar(initialDate);
+		Calendar finalCal = string2Calendar(finalDate);
+		ArrayList<Integer> diasDeLaSemanaNumbers = string2Integers(days);
+
+		for (Calendar date = initialCal; date.compareTo(finalCal) <= 0; date.add(Calendar.DATE, 1)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateStr = sdf.format(date.getTime()); // acá ya está como YYYY-MM-dd
+			int dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
+			if (diasDeLaSemanaNumbers.contains(dayOfWeek)) {
+				// el día de la semana es uno de lo que nos sirve
+				if ((tarifas.containsKey(dateStr))) {
+					// si existe, busca el del mismo tipo de habitación
+					boolean existe = false;
+					for (Tarifa tarifa : tarifas.get(dateStr)) {
+						if (tarifa.getHabitacion().equals(tipoHabitacion)) {
+							// si el tipo de habitación es el mismo, hay que dejar la que tenga menor tarifa
+							if (tarifa.getPrecio() > tarifaNum) {
+								tarifa.setPrecio(tarifaNum);
+							}
+							existe = true;
+						}
+					}
+					if (!(existe)) {
+						ArrayList<Tarifa> listaTarifa = tarifas.get(dateStr);
+						String dayTarifa = num2String(dayOfWeek);
+						Tarifa tarifa = new Tarifa(tipoHabitacion, tarifaNum, dayTarifa);
+						listaTarifa.add(tarifa);
+					}
+				} else {
+					// si no existe, toca crear ese día y poner la nueva tarifa
+					ArrayList<Tarifa> listaTarifas = new ArrayList<Tarifa>();
+					String dayTarifa = num2String(dayOfWeek);
+					Tarifa tarifa = new Tarifa(tipoHabitacion, tarifaNum, dayTarifa);
+					listaTarifas.add(tarifa);
+					tarifas.put(dateStr, listaTarifas);
+				}
+			}
+
+		}
+
+	}
+
+	public static ArrayList<Integer> string2Integers(String days) {
+		// sabado -> 7; domingo -> 1; lunes -> 2
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
+		if (days.contains("domingo")) {
+			numbers.add(1);
+		}
+		if (days.contains("lunes")) {
+			numbers.add(2);
+		}
+		if (days.contains("martes")) {
+			numbers.add(3);
+		}
+		if (days.contains("miercoles")) {
+			numbers.add(4);
+		}
+		if (days.contains("miércoles")) {
+			numbers.add(4);
+		}
+		if (days.contains("jueves")) {
+			numbers.add(5);
+		}
+		if (days.contains("viernes")) {
+			numbers.add(6);
+		}
+		if (days.contains("sábado")) {
+			numbers.add(7);
+		}
+		if (days.contains("sabado")) {
+			numbers.add(7);
+		}
+		return numbers;
+	}
+
+	public static String num2String(int diaSemanaInt) {
+		if (diaSemanaInt == 1) {
+			return "domingo";
+		} else if (diaSemanaInt == 2) {
+			return "lunes";
+		} else if (diaSemanaInt == 3) {
+			return "martes";
+		} else if (diaSemanaInt == 4) {
+			return "miércoles";
+		} else if (diaSemanaInt == 5) {
+			return "jueves";
+		} else if (diaSemanaInt == 6) {
+			return "viernes";
+		} else if (diaSemanaInt == 7) {
+			return "sábado";
+		} else {
+			return "indeterminado";
+		}
+	}
+
+	public static boolean faltaAlgunaTarifa() {
+		boolean faltaAlgunaTarifa = false;
+		int year = 2023; // año
+		int mes = 2; // marzo -> 2
+		int dia = 24; // día del mes
+		Calendar start = Calendar.getInstance();
+		start.set(year, mes, dia); // 24 de marzo de 2023
+		Calendar end = Calendar.getInstance();
+		end.set(year + 1, mes, dia); // 24 de marzo de 2024
+
+		// Iterar sobre el rango de fechas
+		for (Calendar date = start; date.compareTo(end) <= 0; date.add(Calendar.DATE, 1)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			// Formatear la fecha como un String
+			String dateStr = sdf.format(date.getTime());
+			if ((tarifas.containsKey(dateStr))) {
+				ArrayList<Tarifa> lista = tarifas.get(dateStr);
+				if (lista.size() < 3) {
+					faltaAlgunaTarifa = true;
+				}
+			} else {
+				faltaAlgunaTarifa = true;
+			}
+		}
+		return faltaAlgunaTarifa;
+	}
+
 	private static void meterCama(String ID, Cama cama) {
 		for (Habitacion habitacion : habitaciones) {
 			if (habitacion.getID().equals(ID)) {
@@ -211,14 +366,14 @@ public class Inventario {
 		String texto = "";
 		boolean primero = true;
 		for (Entry<String, ArrayList<Tarifa>> entry : tarifas.entrySet()) {
-			if (primero) {
-				primero = false;
-			} else {
-				texto += "\n";
-			}
 			String fecha = entry.getKey();
 			ArrayList<Tarifa> tarifas = entry.getValue();
 			for (Tarifa tarifa : tarifas) {
+				if (primero) {
+					primero = false;
+				} else {
+					texto += "\n";
+				}
 				texto += fecha + ";" + tarifa.getDay() + ";" + tarifa.getHabitacion() + ";"
 						+ (String.valueOf(tarifa.getPrecio())) + ";";
 			}

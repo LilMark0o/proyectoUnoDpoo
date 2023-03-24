@@ -37,9 +37,8 @@ public class Controller {
 		return resp;
 	}
 
-	public static String cargarHabitacionArchivo() throws FileNotFoundException {
+	public static String cargarHabitacionArchivo(String fileName) throws FileNotFoundException {
 		if (usuario.getRol().equals("administracion")) {
-			String fileName = input("¿Cúal es el nombre del archivo? ");
 			Inventario.cargarHabitaciones(fileName);
 			return "¡Cargado exitosamente!";
 		} else {
@@ -47,17 +46,11 @@ public class Controller {
 		}
 	}
 
-	public static String cargarHabitacionManual() throws FileNotFoundException {
-		if (usuario.getRol().equals("administracion")) {
+	public static String cargarHabitacionManual(String tipoHabitacion, String ID, String ubicacion, String tieneBalcon,
+			String tieneVista, String tieneCocina, int capacidadAdulto, int capacidadNino)
+			throws FileNotFoundException {
 
-			String tipoHabitacion = input("¿Qué tipo de habitación quiere? (estándar, suite, suite doble) ");
-			String ID = input("¿Qué ID quiere darle a la habitación? ");
-			String ubicacion = input("¿Qué ubicación quiere darle a la habitación? (ej: Torre 2) ");
-			String tieneBalcon = input("¿La habitación tiene balcón? (Sí o No) ");
-			String tieneVista = input("¿La habitación tiene balcón? (Sí o No) ");
-			String tieneCocina = input("¿La habitación tiene balcón? (Sí o No) ");
-			int capacidadAdulto = Integer.parseInt(input("¿Cúal es la capacidad de adultos de la habitación?"));
-			int capacidadNino = Integer.parseInt(input("¿Cúal es la capacidad de niños de la habitación?"));
+		if (usuario.getRol().equals("administracion")) {
 			Habitacion habitacionNueva = new Habitacion(tipoHabitacion, ID, ubicacion, tieneBalcon, tieneVista,
 					tieneCocina, capacidadAdulto, capacidadNino);
 			if (Inventario.idYaExiste(ID)) {
@@ -66,6 +59,33 @@ public class Controller {
 				Inventario.meterHabitacion(habitacionNueva);
 				return "¡Habitación cargada exitosamente!";
 			}
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
+	public static String consultarHabitación(String ID) {
+		if (Inventario.idYaExiste(ID)) {
+			Habitacion habitacion = Inventario.habitacionPorID(ID);
+			if (habitacion.equals(null)) {
+				return "Tuvimos un problema encontrando la habitación";
+			} else {
+				return habitacion.toString();
+			}
+		} else {
+			return "El ID dado no existe, vuelva a intentarlo con un ID nuevo";
+		}
+	}
+
+	public static String cambiarTarifa(String tipoHabitacion, String initialDate, String finalDate, String days,
+			int tarifaNum) {
+		if (usuario.getRol().equals("administracion")) {
+			if (Inventario.faltaAlgunaTarifa()) {
+				System.out.println(
+						"Hay alguna fecha dentro de los próximos 365 días en la que no exista una tarifa asignada para un cierto tipo de habitación.");
+			}
+			Inventario.cambiarTarifa(tipoHabitacion, initialDate, finalDate, days, tarifaNum);
+			return "¡Cambio exitoso!";
 		} else {
 			return "Sólo un empleado de administración puede llevar a cabo esta acción";
 		}
