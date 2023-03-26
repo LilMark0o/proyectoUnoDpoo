@@ -123,7 +123,7 @@ public class Inventario {
 			String horaInicio = partes[2];
 			String horaFinal = partes[3];
 			int precio = Integer.parseInt(partes[4]);
-			ServicioRestaurante servicioRestaurante = new ServicioRestaurante(nombre, precio, "persona", aCuarto,
+			ServicioRestaurante servicioRestaurante = new ServicioRestaurante(nombre, precio, "personal", aCuarto,
 					horaInicio, horaFinal);
 			menu.add(servicioRestaurante);
 		}
@@ -289,6 +289,44 @@ public class Inventario {
 
 		}
 
+	}
+
+	public static void cambiarMenu(String nombreMenu, String initialHour, String finalHour, String aCuarto,
+			int precio) {
+		boolean existe = false;
+		for (ServicioRestaurante producto : menu) {
+			if (producto.getNombre().equals(nombreMenu)) {
+				existe = true;
+				producto.setCosto(precio);
+				producto.setHoraInicio(initialHour);
+				producto.setHoraFinal(finalHour);
+				boolean aCuartoM = false;
+				if (aCuarto.equals("A habitación")) {
+					aCuartoM = true;
+				}
+				producto.setaCuarto(aCuartoM);
+			}
+		}
+		if (!(existe)) {
+			ServicioRestaurante producto = new ServicioRestaurante(nombreMenu, precio, "personal", aCuarto,
+					initialHour, finalHour);
+			menu.add(producto);
+		}
+	}
+
+	public static void cambiarServicio(String nombreServicio, String cantidadPersonas, int precio) {
+		boolean existe = false;
+		for (Servicio servicio : servicios) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				existe = true;
+				servicio.setCosto(precio);
+				servicio.setCantidadCliente(cantidadPersonas);
+			}
+		}
+		if (!(existe)) {
+			Servicio servicio = new Servicio(nombreServicio, precio, cantidadPersonas);
+			servicios.add(servicio);
+		}
 	}
 
 	public static ArrayList<Integer> string2Integers(String days) {

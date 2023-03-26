@@ -129,7 +129,7 @@ public class Console {
 					// cambiar tarifa :(
 					if (logedIn == true) {
 						String tipoHabitacion = Controller
-								.input("¿Desde tipo de habitación quiere cambiar? (estándar, suite, suite doble): ");
+								.input("¿Qué tipo de habitación quiere cambiar? (estándar, suite, suite doble): ");
 						String initialDate = Controller.input("¿Desde qué fecha? (ej:2023-03-23): ");
 						String finalDate = Controller.input("¿Hasta qué fecha? (ej:2023-03-23): ");
 						String days = Controller.input("¿Qué días? (en minúscula y con tilde): ");
@@ -141,8 +141,48 @@ public class Console {
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
+				} else if (opcion_seleccionada == 5) {
+					// cambiar menu :(
+					if (logedIn == true) {
+						System.out.println(Controller.mostrarMenu());
+						System.out.println("¡IMPORTANTE!");
+						System.out.println(
+								"esta opción sobre-escribe (si ya existe) o crea un elemento nuevo en el menú");
 
-					// ! los dos que quedan son una maricada, tú puedes, Marco del futuro
+						String nombreMenu = Controller
+								.input("¿Qué elemento del menú quieres cambiar/crear?: ");
+						String initialHour = Controller
+								.input("¿Desde qué horas está disponible el producto? (HH:MM): ");
+						String finalHour = Controller
+								.input("¿Hasta qué horas está disponible el producto? (HH:MM): ");
+						String aCuarto = Controller.input("Va al cuarto? (A habitación o En restaurante): ");
+						int tarifaNum = Integer
+								.parseInt(Controller.input("¿Cúal es el precio del producto?"));
+
+						System.out.println(
+								Controller.cambiarMenu(nombreMenu, initialHour, finalHour, aCuarto, tarifaNum));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 6) {
+					// cambiar servicio :(
+					if (logedIn == true) {
+						System.out.println(Controller.mostrarServicios());
+						System.out.println("¡IMPORTANTE!");
+						System.out.println(
+								"esta opción sobre-escribe (si ya existe) o crea un servicio");
+
+						String nombreServicio = Controller
+								.input("¿Qué servicio quieres cambiar/crear?: ");
+						int precio = Integer
+								.parseInt(Controller.input("¿Cúal es el precio del producto?"));
+						String cantidadPersonas = Controller.input("¿Para cuantas personas es? (personal o grupal): ");
+
+						System.out.println(
+								Controller.cambiarServicios(nombreServicio, cantidadPersonas, precio));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
 
 				} else if (opcion_seleccionada == 7) {
 					Inventario.guardarCambios();

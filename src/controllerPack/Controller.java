@@ -93,6 +93,25 @@ public class Controller {
 		}
 	}
 
+	public static String cambiarMenu(String nombreMenu, String initialHour, String finalHour, String aCuarto,
+			int tarifaNum) {
+		if (usuario.getRol().equals("administracion")) {
+			Inventario.cambiarMenu(nombreMenu, initialHour, finalHour, aCuarto, tarifaNum);
+			return "¡Producto creado/cambiado exitosamente!";
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
+	public static String cambiarServicios(String nombreServicio, String cantidadPersonas, int precio) {
+		if (usuario.getRol().equals("administracion")) {
+			Inventario.cambiarServicio(nombreServicio, cantidadPersonas, precio);
+			return "Servicio creado/cambiado exitosamente!";
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
 	public static String cargarServicio(String ID, String nombreServicio, String pagado) {
 		String resp = Servicios.registrarServicio(ID, nombreServicio, pagado);
 		return resp;

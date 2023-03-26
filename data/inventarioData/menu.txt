@@ -7,5 +7,5 @@ Cereal;En restaurante;07:00;12:00;8500
 Wafles;A habitación;07:00;12:00;12000
 Pechuga;En restaurante;12:00;16:00;16000
 Carne;En restaurante;12:00;16:00;16000
-Vino;En restaurante;12:00;22:00;12000
+Vino;En restaurante;14:00;22:00;13500
 Bandeja Paisa;En restaurante;12:00;22:00;18000
