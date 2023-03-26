@@ -57,6 +57,35 @@ public class Inventario {
 		return habitacionBuscada;
 	}
 
+	public static String mostrarMenu() {
+		String txt = "";
+		txt += "El menú consiste de: ";
+		for (ServicioRestaurante servicio : menu) {
+			txt += "\n";
+			txt += "Producto: " + servicio.getNombre();
+			txt += ", con un costo de $" + String.valueOf(servicio.getCosto());
+			txt += " [" + servicio.getHoraInicio() + "-" + servicio.getHoraFinal() + "]";
+			if (servicio.isaCuarto()) {
+				txt += "(Puede ser llevado al cuarto)";
+			}
+		}
+		txt += "\n";
+		return txt;
+	}
+
+	public static String mostrarServicios() {
+		String txt = "";
+		txt += "El menú consiste de: ";
+		for (Servicio servicio : servicios) {
+			txt += "\n";
+			txt += "Servicio: " + servicio.getNombre();
+			txt += ", con un costo de $" + String.valueOf(servicio.getCosto());
+			txt += ". Este servicio es una actividad " + servicio.getCantidadCliente();
+		}
+		txt += "\n";
+		return txt;
+	}
+
 	private static void cargarTarifas() throws FileNotFoundException {
 		String archivo = System.getProperty("user.dir") + "/data/inventarioData/" + "tarifasHabitaciones.txt";
 		File file = new File(archivo);
@@ -179,6 +208,26 @@ public class Inventario {
 			meterCama(ID, cama);
 		}
 		scan.close();
+	}
+
+	public static Servicio buscarServicio(String nombreServicio) {
+		Servicio servicioBuscado = null;
+		for (Servicio servicio : servicios) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				servicioBuscado = servicio;
+			}
+		}
+		return servicioBuscado;
+	}
+
+	public static ServicioRestaurante buscarServicioRestauraServicio(String nombreServicio) {
+		ServicioRestaurante servicioBuscado = null;
+		for (ServicioRestaurante servicio : menu) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				servicioBuscado = servicio;
+			}
+		}
+		return servicioBuscado;
 	}
 
 	private static Calendar string2Calendar(String fechaStr) {
@@ -332,13 +381,13 @@ public class Inventario {
 
 	public static void guardarCambios() throws IOException {
 		String textoGuardarHabitacionesSTR = textoGuardarHabitaciones();
-		guardarArchivo(textoGuardarHabitacionesSTR, "habitaciones.txt");
+		guardarArchivo(textoGuardarHabitacionesSTR, "inventarioData", "habitaciones.txt");
 		String textoGuardarMenuSTR = textoGuardarMenu();
-		guardarArchivo(textoGuardarMenuSTR, "menu.txt");
+		guardarArchivo(textoGuardarMenuSTR, "inventarioData", "menu.txt");
 		String textoGuardarTarifa = textoGuardarTarifa();
-		guardarArchivo(textoGuardarTarifa, "tarifasHabitaciones.txt");
+		guardarArchivo(textoGuardarTarifa, "inventarioData", "tarifasHabitaciones.txt");
 		String textoGuardarServicios = textoGuardarServicios();
-		guardarArchivo(textoGuardarServicios, "tarifasServicios.txt");
+		guardarArchivo(textoGuardarServicios, "inventarioData", "tarifasServicios.txt");
 	}
 
 	// ! todo esto es horrible, pero es la unica forma que se me ocurrio para
@@ -445,8 +494,8 @@ public class Inventario {
 		return aMeterGrande;
 	}
 
-	private static void guardarArchivo(String text, String fileName) throws IOException {
-		String archivo = System.getProperty("user.dir") + "/data/inventarioData/" + fileName;
+	public static void guardarArchivo(String text, String folder, String fileName) throws IOException {
+		String archivo = System.getProperty("user.dir") + "/data/" + folder + "/" + fileName;
 		FileWriter writer = new FileWriter(archivo);
 		writer.write(text);
 		writer.close();

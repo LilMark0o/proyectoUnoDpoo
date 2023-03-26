@@ -5,6 +5,7 @@ import java.io.IOException;
 import controllerPack.Controller;
 import inventarioPack.Inventario;
 import loginApp.Login;
+import serviciosPack.Servicios;
 
 public class Console {
 	private static Boolean logedIn;
@@ -23,7 +24,7 @@ public class Console {
 				} else if (opcion_seleccionada == 2) {
 					inventarioMenu();
 				} else if (opcion_seleccionada == 3) {
-
+					serviciosMenu();
 				} else if (opcion_seleccionada == 4) {
 
 				} else if (opcion_seleccionada == 5) {
@@ -140,6 +141,9 @@ public class Console {
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
+
+					// ! los dos que quedan son una maricada, tú puedes, Marco del futuro
+
 				} else if (opcion_seleccionada == 7) {
 					Inventario.guardarCambios();
 					System.out.println("Chaolin pin pín	");
@@ -153,7 +157,84 @@ public class Console {
 		}
 	}
 
+	public static void serviciosMenu() throws IOException {
+		boolean continuarEnOpción = true;
+		while (continuarEnOpción) {
+			try {
+				serviciosOptions();
+				int opcion_seleccionada = Integer.parseInt(Controller.input("Por favor seleccione una opción"));
+				if (opcion_seleccionada == 1) {
+					System.out.println(Controller.mostrarServicios());
+					// registrar servicios por ID
+					if (logedIn == true) {
+						String ID = Controller
+								.input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID) ");
+						String nombreServicio = Controller
+								.input("¿Qué servicio se va a pagar? ");
+						String pagado = Controller
+								.input("¿El usuario pagó por este servicio? (Sí o No) ");
+						System.out.println(Controller.cargarServicio(ID, nombreServicio, pagado));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 2) {
+					// cargar Individual
+					System.out.println(Controller.mostrarMenu());
+					if (logedIn == true) {
+						String ID = Controller
+								.input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID) ");
+						String nombreServicio = Controller
+								.input("¿Qué servicio se va a pagar? ");
+						String pagado = Controller
+								.input("¿El usuario pagó por este servicio? (Sí o No) ");
+						System.out.println(Controller.cargarServicioRestaurante(ID, nombreServicio, pagado));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 3) {
+					// cargar Individual
+					if (logedIn == true) {
+						String ID = Controller
+								.input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID) ");
+						String nombreServicio = Controller
+								.input("¿Qué servicio se va a pagar?  ");
+						System.out.println(Controller.pagarServicio(ID, nombreServicio));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+
+				} else if (opcion_seleccionada == 4) {
+					// generar Factura
+					if (logedIn == true) {
+						String ID = Controller
+								.input("¿A qué ID se va a generar la factura? (habitación ID o persona ID)");
+						System.out.println(Controller.generarFactura(ID));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+
+				} else if (opcion_seleccionada == 5) {
+					Servicios.guardarCambios();
+					System.out.println("Chaolin pin pín	");
+					continuarEnOpción = false;
+				} else {
+					System.out.println("Por favor seleccione una opción válida.");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Debe seleccionar uno de los números de las opciones.");
+			}
+		}
+	}
+
 	// EN ESTA PARTE IRAN TODAS LAS FUNCIONES DE MENÚ U OPERACIONALES
+	public static void logInOptions() {
+		System.out.println("\nOpciones respecto al ingreso al sistema\n");
+		System.out.println("1. Log-in");
+		System.out.println("2. Log-out");
+		System.out.println("3. Cambio de contraseña");
+		System.out.println("4. Salir del menú\n");
+	}
+
 	public static void inventarioOptions() {
 		System.out.println("\nOpciones respecto al inventario del hotel\n");
 		System.out.println("1. Cargar Habitación (Cargar Archivo)");
@@ -165,19 +246,20 @@ public class Console {
 		System.out.println("7. Salir del menú\n");
 	}
 
-	public static void logInOptions() {
-		System.out.println("\nOpciones respecto al ingreso al sistema\n");
-		System.out.println("1. Log-in");
-		System.out.println("2. Log-out");
-		System.out.println("3. Cambio de contraseña");
-		System.out.println("4. Salir del menú\n");
+	public static void serviciosOptions() {
+		System.out.println("\nOpciones respecto a los servicios del hotel\n");
+		System.out.println("1. Registrar servicio a huésped");
+		System.out.println("2. Registrar servicio de restaurante a huésped");
+		System.out.println("3. Registrar pago de servicio");
+		System.out.println("4. Generar Factura");
+		System.out.println("5. Salir del menú\n");
 	}
 
 	public static void mostrarOpciones() {
 		System.out.println("\nOpciones de la aplicación\n");
 		System.out.println("1. Opciones del Log-in, Log-out, cambio de contraseña");
 		System.out.println("2. Opciones del Inventario");
-		System.out.println("3. Hacer un pedido");
+		System.out.println("3. Opciones de Servicios");
 		System.out.println("4. Terminar el pedido e imprimir factura");
 		System.out.println("5. Salir de la aplicación\n");
 	}

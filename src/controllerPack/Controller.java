@@ -1,6 +1,7 @@
 package controllerPack;
 
 import loginApp.Usuario;
+import serviciosPack.Servicios;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,6 +18,7 @@ public class Controller {
 	public static void startApp() throws FileNotFoundException {
 		Login.cargarLogIn();
 		Inventario.cargarInventario();
+		Servicios.cargarServicios();
 	}
 
 	public static boolean logIn(String userName, String password) {
@@ -89,6 +91,36 @@ public class Controller {
 		} else {
 			return "Sólo un empleado de administración puede llevar a cabo esta acción";
 		}
+	}
+
+	public static String cargarServicio(String ID, String nombreServicio, String pagado) {
+		String resp = Servicios.registrarServicio(ID, nombreServicio, pagado);
+		return resp;
+	}
+
+	public static String cargarServicioRestaurante(String ID, String nombreServicio, String pagado) {
+		String resp = Servicios.registrarServicioRestaurante(ID, nombreServicio, pagado);
+		return resp;
+	}
+
+	public static String pagarServicio(String ID, String nombreServicio) {
+		String resp = Servicios.pagarServicio(ID, nombreServicio);
+		return resp;
+	}
+
+	public static String mostrarMenu() {
+		String txt = Inventario.mostrarMenu();
+		return txt;
+	}
+
+	public static String mostrarServicios() {
+		String txt = Inventario.mostrarServicios();
+		return txt;
+	}
+
+	public static String generarFactura(String ID) throws IOException {
+		String txt = Servicios.generarFactura(ID);
+		return txt;
 	}
 
 	public static String input(String mensaje) {

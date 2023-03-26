@@ -1,7 +1,13 @@
 package inventarioPack;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+
+import serviciosPack.Huesped;
 
 public class Habitacion {
 	private String tipoHabitacion;
@@ -13,6 +19,7 @@ public class Habitacion {
 	private int capacidadAdulto;
 	private int capacidadNino;
 	private List<Cama> camas;
+	private HashMap<String, ArrayList<Huesped>> reservasProfundidad;
 
 	public Habitacion(String tipoHabitacion, String ID, String ubicacion, String tieneBalcon, String tieneVista,
 			String tieneCocina, int capacidadAdulto, int capacidadNino) {
@@ -20,6 +27,7 @@ public class Habitacion {
 		this.ID = ID;
 		this.ubicacion = ubicacion;
 		camas = new ArrayList<Cama>();
+		reservasProfundidad = new HashMap<String, ArrayList<Huesped>>();
 
 		if (tieneBalcon.equals("Sí")) {
 			this.tieneBalcon = true;
@@ -40,6 +48,63 @@ public class Habitacion {
 		}
 		this.capacidadAdulto = capacidadAdulto;
 		this.capacidadNino = capacidadNino;
+	}
+
+	public void hacerReserva(ArrayList<String> dates, ArrayList<Huesped> huespeds) {
+		for (String date : dates) {
+			reservasProfundidad.put(date, huespeds);
+		}
+	}
+
+	public boolean sePuedeReservar(ArrayList<String> dates) {
+		boolean sePuede = true;
+		for (String date : dates) {
+			if (reservasProfundidad.containsKey(date)) {
+				sePuede = false;
+			}
+		}
+		return sePuede;
+	}
+
+	public void cancelarReserva(ArrayList<String> dates) {
+		for (String date : dates) {
+			if (reservasProfundidad.containsKey(date)) {
+				reservasProfundidad.remove(date);
+			}
+		}
+	}
+
+	public boolean sePuedeCancelar(String fechaActual, Huesped huesped) {
+		boolean sePuede = true;
+		ArrayList<String> fechasReservadas = fechasPerCliente(huesped);
+		for (String fecha : fechasReservadas) {
+			int diferencia = diferenciaFechas(fechaActual, fecha);
+			if (diferencia > 2) {
+				sePuede = false;
+			}
+		}
+		return sePuede;
+	}
+
+	private int diferenciaFechas(String fecha1, String fecha2) {
+		LocalDate date1 = LocalDate.parse(fecha1);
+		LocalDate date2 = LocalDate.parse(fecha2);
+
+		// Calcular la diferencia entre las fechas en días
+		int diff = (int) ChronoUnit.DAYS.between(date1, date2);
+		return diff;
+	}
+
+	private ArrayList<String> fechasPerCliente(Huesped huesped) {
+		ArrayList<String> fechasEscogidas = new ArrayList<String>();
+		for (Entry<String, ArrayList<Huesped>> entry : reservasProfundidad.entrySet()) {
+			String fecha = entry.getKey();
+			ArrayList<Huesped> huespeds = entry.getValue();
+			if (huespeds.contains(huesped)) {
+				fechasEscogidas.add(fecha);
+			}
+		}
+		return fechasEscogidas;
 	}
 
 	public void anadirCama(Cama cama) {
@@ -141,4 +206,5 @@ public class Habitacion {
 		resp += "le caben " + String.valueOf(capacidadNino) + " niños.";
 		return resp;
 	}
+
 }
