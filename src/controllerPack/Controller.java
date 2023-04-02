@@ -1,12 +1,15 @@
 package controllerPack;
 
 import loginApp.Usuario;
+import serviciosPack.Huesped;
+import serviciosPack.Reservante;
 import serviciosPack.Servicios;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
@@ -140,6 +143,64 @@ public class Controller {
 	public static String generarFactura(String ID) throws IOException {
 		String txt = Servicios.generarFactura(ID);
 		return txt;
+	}
+
+	public static String checkOut(String IDReservante) throws IOException {
+		if (usuario.getRol().equals("recepcion")) {
+			boolean sePuede = Servicios.checkOut(IDReservante);
+			if (sePuede) {
+				return "Check-out hecho exitosamente, ¡Vuelva pronto!";
+			} else {
+				return "No se puede realizar el Check-out, revise si todos sus servicios están pagos, o si los ID está bien escrito";
+			}
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
+	// ! Reservas
+	public static String generarReserva(String nombreReservante, int edad, String IDReservante,
+			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
+			String fechaFinal, String tipoDeHabitacion) {
+		if (usuario.getRol().equals("recepcion")) {
+			return Servicios.generarReserva(nombreReservante, edad, IDReservante,
+					correoReservante, numeroCelular,
+					cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion);
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
+	public static int chismosearPrecio(String tipoHabitacion, String initialDate, String finalDate) {
+		int costo = Inventario.tarifaAPagar(tipoHabitacion, initialDate, finalDate);
+		return costo;
+	}
+
+	public static String chismosearPrecioLargo(String tipoHabitacion, String initialDate, String finalDate) {
+		if (usuario.getRol().equals("recepcion")) {
+			int costo = Inventario.tarifaAPagar(tipoHabitacion, initialDate, finalDate);
+			if (costo == -1) {
+				return "No hay tarifas disponibles para estas fechas, lo sentimos :(";
+			} else {
+				return "El monto a pagar sería: $" + String.valueOf(costo);
+			}
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
+	}
+
+	public static String cancelarReserva(String ID, String fechaActual) {
+		if (usuario.getRol().equals("recepcion")) {
+			if (Servicios.cancelarReserva(ID, fechaActual) == 1) {
+				return "la reserva se canceló exitosamente";
+			} else if (Servicios.cancelarReserva(ID, fechaActual) == 0) {
+				return "No se encontró el ID ingresado";
+			} else {
+				return "Las reservas no se pueden cancelar en las últimas 48 horas";
+			}
+		} else {
+			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+		}
 	}
 
 	public static String input(String mensaje) {

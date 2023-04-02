@@ -26,7 +26,7 @@ public class Console {
 				} else if (opcion_seleccionada == 3) {
 					serviciosMenu();
 				} else if (opcion_seleccionada == 4) {
-
+					reservasRegistroMenu();
 				} else if (opcion_seleccionada == 5) {
 					System.out.println("Chaolin pin pín	");
 					continuar = false;
@@ -244,6 +244,80 @@ public class Console {
 					}
 
 				} else if (opcion_seleccionada == 4) {
+					Servicios.guardarCambios();
+					System.out.println("Chaolin pin pín	");
+					continuarEnOpción = false;
+				} else {
+					System.out.println("Por favor seleccione una opción válida.");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Debe seleccionar uno de los números de las opciones.");
+			}
+		}
+	}
+
+	public static void reservasRegistroMenu() throws IOException {
+		boolean continuarEnOpción = true;
+		while (continuarEnOpción) {
+			try {
+				reservasRegistroFacturaOptions();
+				int opcion_seleccionada = Integer.parseInt(Controller.input("Por favor seleccione una opción"));
+				if (opcion_seleccionada == 1) {
+					// Reservar
+					if (logedIn == true) {
+						// ! hacer función grande para esta parte
+						String nombreReservante = Controller
+								.input("¿Cúal es el nombre del reservante?");
+						int edad = Integer.parseInt(Controller
+								.input("¿Cúal es la edad del reservante?"));
+						String IDReservante = Controller
+								.input("¿Cúal es el ID del reservante?");
+						String correoReservante = Controller
+								.input("¿Cúal es el correo del reservante?");
+						Long numeroCelular = Long.parseLong(Controller
+								.input("¿Cual es el número de celular del reservante? (sin el +57) "));
+						int cantidadAcompanantes = Integer.parseInt(Controller
+								.input("¿Cúantos acompañantes tiene el reservante?"));
+						// ? El ID del grupo se generará luego
+						String fechaInicial = Controller
+								.input("¿Desde que fecha empieza? (ej:2023-03-23 ");
+						String fechaFinal = Controller
+								.input("¿Hasta que fecha quiere estar? (ej:2023-03-23) ");
+						String tipoDeHabitacion = Controller
+								.input("¿Qué tipo de habitación quiere? (estándar, suite, suite doble) ");
+						System.out.println(Controller.generarReserva(nombreReservante, edad, IDReservante,
+								correoReservante, numeroCelular,
+								cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 2) {
+					// Cancelar reserva
+					if (logedIn == true) {
+						String ID = Controller
+								.input("¿Cúal es el ID con el que se reservó? (reservante ID) ");
+						String fechaActual = Controller
+								.input("¿Cual es la fecha en la que se está pidiendo la cancelación? (Ej: 2023-04-09) ");
+						System.out.println(Controller.cancelarReserva(ID, fechaActual));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 3) {
+					// Chismosear tarifas
+					if (logedIn == true) {
+						String nombreHabitacion = Controller
+								.input("¿Qué habitación quiere revisar? (estándar, suite, suite doble) ");
+						String fechaInicial = Controller
+								.input("¿Desde que fecha empieza? (Ej: 2023-04-09) ");
+						String fechaFinal = Controller
+								.input("¿Hasta que fecha se hospedará? (Ej: 2023-04-09) ");
+						System.out
+								.println(Controller.chismosearPrecioLargo(nombreHabitacion, fechaInicial, fechaFinal));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+
+				} else if (opcion_seleccionada == 4) {
 					// generar Factura
 					if (logedIn == true) {
 						String ID = Controller
@@ -252,8 +326,16 @@ public class Console {
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
-
 				} else if (opcion_seleccionada == 5) {
+					// hacer Check-Out
+					if (logedIn == true) {
+						String IDReservante = Controller
+								.input("¿Cúal es el ID del reservante? (reservante ID)");
+						System.out.println(Controller.checkOut(IDReservante));
+					} else {
+						System.out.println("Debes iniciar sesión primero");
+					}
+				} else if (opcion_seleccionada == 6) {
 					Servicios.guardarCambios();
 					System.out.println("Chaolin pin pín	");
 					continuarEnOpción = false;
@@ -291,8 +373,17 @@ public class Console {
 		System.out.println("1. Registrar servicio a huésped");
 		System.out.println("2. Registrar servicio de restaurante a huésped");
 		System.out.println("3. Registrar pago de servicio");
+		System.out.println("4. Salir del menú\n");
+	}
+
+	public static void reservasRegistroFacturaOptions() {
+		System.out.println("\nOpciones respecto a recepción\n");
+		System.out.println("1. Reservar");
+		System.out.println("2. Cancelar Reserva");
+		System.out.println("3. Consultar tarifas por noches (Sin necesitar reservar)");
 		System.out.println("4. Generar Factura");
-		System.out.println("5. Salir del menú\n");
+		System.out.println("5. Check-Out\n");
+		System.out.println("6. Salir del menú\n");
 	}
 
 	public static void mostrarOpciones() {
@@ -300,7 +391,7 @@ public class Console {
 		System.out.println("1. Opciones del Log-in, Log-out, cambio de contraseña");
 		System.out.println("2. Opciones del Inventario");
 		System.out.println("3. Opciones de Servicios");
-		System.out.println("4. Terminar el pedido e imprimir factura");
+		System.out.println("4. Servicios de recepción");
 		System.out.println("5. Salir de la aplicación\n");
 	}
 

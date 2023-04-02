@@ -1,4 +1,4 @@
-Ski;70000;personal
+Ski;65000;personal
 Spa;750000;personal
 Guía Turístico;40000;grupal
 Alquilar piscina;250000;grupal

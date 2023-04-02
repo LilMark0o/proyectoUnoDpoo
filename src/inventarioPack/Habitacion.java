@@ -50,7 +50,8 @@ public class Habitacion {
 		this.capacidadNino = capacidadNino;
 	}
 
-	public void hacerReserva(ArrayList<String> dates, ArrayList<Huesped> huespeds) {
+	public void hacerReserva(String initialDate, String finalDate, ArrayList<Huesped> huespeds) {
+		ArrayList<String> dates = Inventario.fechas2rango(initialDate, finalDate);
 		for (String date : dates) {
 			reservasProfundidad.put(date, huespeds);
 		}
@@ -66,11 +67,10 @@ public class Habitacion {
 		return sePuede;
 	}
 
-	public void cancelarReserva(ArrayList<String> dates) {
-		for (String date : dates) {
-			if (reservasProfundidad.containsKey(date)) {
-				reservasProfundidad.remove(date);
-			}
+	public void cancelarReserva(Huesped huesped) {
+		ArrayList<String> fechasReservadas = fechasPerCliente(huesped);
+		for (String date : fechasReservadas) {
+			reservasProfundidad.remove(date);
 		}
 	}
 
@@ -79,11 +79,23 @@ public class Habitacion {
 		ArrayList<String> fechasReservadas = fechasPerCliente(huesped);
 		for (String fecha : fechasReservadas) {
 			int diferencia = diferenciaFechas(fechaActual, fecha);
-			if (diferencia > 2) {
+			if ((diferencia <= 2) || (isAfter(fechaActual, fecha))) {
 				sePuede = false;
 			}
 		}
 		return sePuede;
+	}
+
+	private boolean isAfter(String fechaInicio, String fechaAComparar) {
+		LocalDate fecha1 = LocalDate.parse(fechaInicio);
+		LocalDate fecha2 = LocalDate.parse(fechaAComparar);
+
+		// Comparar fechas usando isAfter()
+		if (fecha1.isAfter(fecha2)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private int diferenciaFechas(String fecha1, String fecha2) {
@@ -205,6 +217,14 @@ public class Habitacion {
 		resp += "le caben " + String.valueOf(capacidadAdulto) + " adultos y ";
 		resp += "le caben " + String.valueOf(capacidadNino) + " niños.";
 		return resp;
+	}
+
+	public HashMap<String, ArrayList<Huesped>> getReservasProfundidad() {
+		return reservasProfundidad;
+	}
+
+	public void setReservasProfundidad(HashMap<String, ArrayList<Huesped>> reservasProfundidad) {
+		this.reservasProfundidad = reservasProfundidad;
 	}
 
 }

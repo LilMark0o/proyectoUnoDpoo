@@ -1,42 +1,47 @@
 package serviciosPack;
 
-
 public class Huesped {
-	private String nombre;
-	private String ID;
-	private String correoElectronico;
-	private String numeroTelefonico;
-	
-	public Huesped(String nombre, String iD, String correoElectronico, String numeroTelefonico) {
+	protected int IDgrupo;
+	protected String nombre;
+	protected int edad;
+	protected String ID;
+
+	public Huesped(String nombre, int edad, String iD, int IDGrupo) {
 		this.nombre = nombre;
+		this.edad = edad;
 		ID = iD;
-		this.correoElectronico = correoElectronico;
-		this.numeroTelefonico = numeroTelefonico;
+		IDgrupo = IDGrupo;
 	}
-	
+
+	public int getIDgrupo() {
+		return IDgrupo;
+	}
+
+	public void setIDgrupo(int iDgrupo) {
+		IDgrupo = iDgrupo;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
 	public String getID() {
 		return ID;
 	}
+
 	public void setID(String iD) {
 		ID = iD;
 	}
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
-	public String getNumeroTelefonico() {
-		return numeroTelefonico;
-	}
-	public void setNumeroTelefonico(String numeroTelefonico) {
-		this.numeroTelefonico = numeroTelefonico;
-	}
-	
 }

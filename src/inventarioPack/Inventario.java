@@ -417,6 +417,132 @@ public class Inventario {
 		}
 	}
 
+	public static ArrayList<String> fechas2rango(String initialDate, String finalDate) {
+		ArrayList<String> fechasNecesarias = new ArrayList<String>();
+		Calendar initialCal = string2Calendar(initialDate);
+		Calendar finalCal = string2Calendar(finalDate);
+
+		for (Calendar date = initialCal; date.compareTo(finalCal) <= 0; date.add(Calendar.DATE, 1)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateStr = sdf.format(date.getTime()); // acá ya está como YYYY-MM-dd
+			fechasNecesarias.add(dateStr);
+		}
+		if (!(fechasNecesarias.contains(initialDate))) {
+			fechasNecesarias.add(initialDate);
+		}
+		if (!(fechasNecesarias.contains(finalDate))) {
+			fechasNecesarias.add(finalDate);
+		}
+		return fechasNecesarias;
+	}
+
+	public static int tarifaAPagar(String tipoHabitacion, String initialDate, String finalDate) {
+		ArrayList<String> fechasNecesarias = fechas2rango(initialDate, finalDate);
+		int pago = 0;
+		boolean tarifaExiste = true;
+		for (String fecha : fechasNecesarias) {
+			if (tarifas.containsKey(fecha)) {
+				ArrayList<Tarifa> tarifasArray = tarifas.get(fecha);
+				for (Tarifa tarifa : tarifasArray) {
+					if (tarifa.getHabitacion().equals(tipoHabitacion)) {
+						pago += tarifa.getPrecio();
+					}
+				}
+			} else {
+				tarifaExiste = false;
+			}
+		}
+		if (!tarifaExiste) {
+			return -1;
+		} else {
+			return pago;
+		}
+	}
+
+	public static ArrayList<String> hayHabitacion(String tipoHabitacion, String initialDate, String finalDate) {
+		ArrayList<String> habitacionesUtiles = new ArrayList<String>();
+		ArrayList<String> fechasNecesarias = new ArrayList<String>();
+		Calendar initialCal = string2Calendar(initialDate);
+		Calendar finalCal = string2Calendar(finalDate);
+
+		for (Calendar date = initialCal; date.compareTo(finalCal) <= 0; date.add(Calendar.DATE, 1)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateStr = sdf.format(date.getTime()); // acá ya está como YYYY-MM-dd
+			fechasNecesarias.add(dateStr);
+		}
+		if (!(fechasNecesarias.contains(initialDate))) {
+			fechasNecesarias.add(initialDate);
+		}
+		if (!(fechasNecesarias.contains(finalDate))) {
+			fechasNecesarias.add(finalDate);
+		}
+
+		// ? ya tenemos un arrayList con todas las fechas necesarias
+
+		for (Habitacion habitacion : habitaciones) {
+			if (habitacion.getTipoHabitacion().equals(tipoHabitacion)) {
+				if (habitacion.sePuedeReservar(fechasNecesarias)) {
+					habitacionesUtiles.add(habitacion.getID());
+				}
+			}
+		}
+		return habitacionesUtiles;
+	}
+
+	public static Habitacion getHabitacionPerID(String IDHabitacion) {
+		Habitacion habitacionBuscada = null;
+		for (Habitacion habitacion : habitaciones) {
+			if (habitacion.getID().equals(IDHabitacion)) {
+				habitacionBuscada = habitacion;
+			}
+		}
+		return habitacionBuscada;
+	}
+
+	public static boolean leCabe(Habitacion habitacion, int adultos, int ninos) {
+		int adultosCapacidad = habitacion.getCapacidadAdulto();
+		int ninosCapacidad = habitacion.getCapacidadNino();
+		if (adultosCapacidad >= adultos + ninos) {
+			return true;
+		} else if ((adultosCapacidad >= adultos) && (ninosCapacidad >= ninosCapacidad)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static ArrayList<String> asignarHabitacion(ArrayList<String> habitacionesFiltradas, int adultos,
+			int ninos) {
+		ArrayList<String> necesarias = new ArrayList<String>();
+		boolean yaEstamosAsignados = false;
+		for (String habitacion : habitacionesFiltradas) {
+			Habitacion habitacionBien = getHabitacionPerID(habitacion);
+			int adultoHab = habitacionBien.getCapacidadAdulto();
+			int ninoHab = habitacionBien.getCapacidadNino();
+			if (adultoHab >= adultos) {
+				adultos = 0;
+				adultoHab = adultoHab - adultos;
+				ninos = ninos - (adultoHab + ninoHab);
+			} else {
+				adultos = adultos - adultoHab;
+				ninos = ninos - ninoHab;
+			}
+			if ((adultos <= 0) && (ninos <= 0)) {
+				if (!(yaEstamosAsignados)) {
+					yaEstamosAsignados = true;
+					necesarias.add(habitacion);
+				}
+			} else {
+				necesarias.add(habitacion);
+			}
+		}
+		if ((adultos <= 0) && (ninos <= 0)) {
+			return necesarias;
+		} else {
+			return null;
+		}
+	}
+
 	public static void guardarCambios() throws IOException {
 		String textoGuardarHabitacionesSTR = textoGuardarHabitaciones();
 		guardarArchivo(textoGuardarHabitacionesSTR, "inventarioData", "habitaciones.txt");
