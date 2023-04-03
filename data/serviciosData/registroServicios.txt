@@ -3,5 +3,8 @@
 303;Spa;Sí
 512;Pepsi;No
 512;Bandeja Paisa;Sí
+512;Carne;Sí
+512;Caminata en el lago;No
 804;Spa;Sí
 804;Ski;No
+23931203;Spa;Sí

@@ -136,29 +136,49 @@ public class Servicios {
 					+ " ---\n";
 
 			int IDGrupo = reservante.getIDgrupo();
-			ArrayList<Huesped> grupitoPersonas = grupos.get(IDGrupo);
-			for (Huesped huesped : grupitoPersonas) {
-
-				if (registroServicios.containsKey(ID)) {
-					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(ID);
-					if (serviciosDelUsuario.size() == 0) {
-						return "No hay servicios enlazados a este ID";
-					} else {
-						boolean primero = true;
-						String txt = "";
+			ArrayList<String> IDhabitaciones = reservante.getIDHabitaciones();
+			for (String IDhabitacion : IDhabitaciones) {
+				Habitacion habitacion = Inventario.getHabitacionPerID(IDhabitacion);
+				// ! poner habitacion ID, tipo, tarifa
+				textoFacturesco += "En su estadía se reservó la habitación de tipo " + habitacion.getTipoHabitacion()
+						+ " con ID" + habitacion.getID();
+				textoFacturesco += "\n";
+				textoFacturesco += "La tarifa pagada fue de: $" + Inventario.tarifaAPagar(
+						habitacion.getTipoHabitacion(), reservante.getFechaInicio(), reservante.getFechaFin());
+				textoFacturesco += "\n";
+			}
+			for (String IDhabitacion : IDhabitaciones) {
+				Habitacion habitacion = Inventario.getHabitacionPerID(IDhabitacion);
+				// ! poner habitacion ID, tipo, tarifa
+				if (registroServicios.containsKey(habitacion.getID())) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(habitacion.getID());
+					if (serviciosDelUsuario.size() != 0) {
+						textoFacturesco += "A la  habitación con ID" + habitacion.getID() + " se cargó:";
+						textoFacturesco += "\n";
 						for (Servicio servicio : serviciosDelUsuario) {
-							if (primero) {
-								primero = false;
-							} else {
-								txt += "\n";
-							}
-							txt += servicio.getTextoFactura();
+							textoFacturesco += servicio.getTextoFactura();
+							textoFacturesco += "\n";
 						}
-						String fileName = "Factura_" + ID;
-						Inventario.guardarArchivo(txt, "facturas", fileName);
 					}
 				}
 			}
+
+			ArrayList<Huesped> grupitoPersonas = grupos.get(IDGrupo);
+			for (Huesped huesped : grupitoPersonas) {
+				if (registroServicios.containsKey(huesped.getID())) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(huesped.getID());
+					if (serviciosDelUsuario.size() != 0) {
+						textoFacturesco += "El huesped " + huesped.getNombre() + " consumió:";
+						textoFacturesco += "\n";
+						for (Servicio servicio : serviciosDelUsuario) {
+							textoFacturesco += servicio.getTextoFactura();
+							textoFacturesco += "\n";
+						}
+					}
+				}
+			}
+			String fileName = "Factura_" + reservante.getNombre() + "_" + ID + ".txt";
+			Inventario.guardarArchivo(textoFacturesco, "facturas", fileName);
 			return "Factura generada exitosamente, revise la carpeta \"facturas\"";
 
 		} else {

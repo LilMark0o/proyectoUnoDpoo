@@ -321,7 +321,7 @@ public class Console {
 					// generar Factura
 					if (logedIn == true) {
 						String ID = Controller
-								.input("¿A qué ID se va a generar la factura? (habitación ID o persona ID)");
+								.input("¿A qué ID se va a generar la factura? (reservante ID)");
 						System.out.println(Controller.generarFactura(ID));
 					} else {
 						System.out.println("Debes iniciar sesión primero");

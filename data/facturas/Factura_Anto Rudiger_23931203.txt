@@ -1,0 +1,12 @@
+-----  Factura a nombre de Anto Rudiger -----
+---  Con fecha de ingreso de 2023-06-10 ---
+---  Y fecha de salida de 2023-06-15 ---
+En su estadía se reservó la habitación de tipo suite doble con ID512
+La tarifa pagada fue de: $540000
+A la  habitación con ID512 se cargó:
+El servicio Pepsi, que tiene un costo de 4500 NO ha sido pagado.
+El servicio Bandeja Paisa, que tiene un costo de 18000 fue pagado exitosamente.
+El servicio Carne, que tiene un costo de 16000 fue pagado exitosamente.
+El servicio Caminata en el lago, que tiene un costo de 70000 NO ha sido pagado.
+El huesped Anto Rudiger consumió:
+El servicio Spa, que tiene un costo de 750000 fue pagado exitosamente.
