@@ -16,7 +16,7 @@ public class CambiarTarifa extends JFrame {
     private JButton cargarButton;
 
     public CambiarTarifa() {
-        setTitle("Opciones Recepción");
+        setTitle("Cambiar tarifa");
         setSize(400, 400);
         setLocationRelativeTo(null);
 
