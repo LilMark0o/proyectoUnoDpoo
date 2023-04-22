@@ -12,7 +12,7 @@ import controllerPack.Controller;
 public class mainInterface extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     public static Boolean logedIn = true;
-    private static JButton buttonProfile;
+    private static JLabel buttonProfile;
     private static JButton buttonLogIn;
     private static JButton buttonLogOut;
     private static JButton buttonExit;
@@ -58,11 +58,11 @@ public class mainInterface extends JFrame implements ActionListener {
 
         abajo.setLayout(new GridLayout(1, 9));
         abajo.setPreferredSize(new Dimension(getWidth(), 105));
-        buttonProfile = new JButton();
+        buttonProfile = new JLabel();
         buttonProfile.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
         ImageIcon image = new ImageIcon("./data/images/user.png");
         buttonProfile.setIcon(image);
-        buttonProfile.addActionListener(this);
+        buttonProfile.setHorizontalAlignment(JLabel.CENTER);
         buttonLogIn = new JButton();
         buttonLogIn.setText("Log-in");
         buttonLogIn.addActionListener(this);
@@ -198,6 +198,7 @@ public class mainInterface extends JFrame implements ActionListener {
         } else if (e.getSource() == buttonLogOut) {
             System.out.println("HOLA, sirvo2");
             logedIn = false;
+            Controller.logOut();
             actualizarEstadoBotones();
         } else if (e.getSource() == buttonProfile && logedIn) {
             System.out.println("HOLA, sirvo3");
