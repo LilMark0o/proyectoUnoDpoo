@@ -92,7 +92,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cargarHabitacionArc) {
-            System.out.println("HOLA, sirvo");
+            new CargarHabitacionArchivo();
         } else if (e.getSource() == cambiarTarifa) {
             new CambiarTarifa();
         } else if (e.getSource() == cargarHabitacionInd) {

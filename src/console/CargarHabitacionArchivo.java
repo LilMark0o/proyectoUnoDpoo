@@ -1,23 +1,23 @@
 package console;
 
 import javax.swing.*;
+
+import controllerPack.Controller;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
-public class CambiarTarifa extends JFrame {
+public class CargarHabitacionArchivo extends JFrame {
     private static final long serialVersionUID = 1L;
-    private JComboBox<String> comboTipo;
-    private JTextField textDesde;
-    private JTextField textHasta;
-    private JTextField textDia;
-    private JTextField textTarifa;
+    private JTextField textNombreArchivo;
     private JButton exitButton;
     private JButton cargarButton;
 
-    public CambiarTarifa() {
+    public CargarHabitacionArchivo() {
         setTitle("Cambiar tarifa");
-        setSize(400, 400);
+        setSize(400, 200);
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
@@ -37,33 +37,17 @@ public class CambiarTarifa extends JFrame {
         panelCentral.setLayout(new BorderLayout(10, 10)); // 10 píxeles de espacio entre componentes
         panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // margen de 10 píxeles en cada borde
 
-        JPanel panelContenedor = new JPanel(new GridLayout(5, 2, 10, 10)); // 5 filas, 2 columnas, 10 píxeles de espacio
+        JPanel panelContenedor = new JPanel(new GridLayout(1, 2, 10, 10)); // 5 filas, 2 columnas, 10 píxeles de espacio
                                                                            // entre
         // filas y columnas
         panelContenedor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 10 pixels de espacio en los
                                                                                     // bordes
 
-        JLabel labelTipo = new JLabel("Tipo habitación: ");
-        comboTipo = new JComboBox<>(new String[] { "estándar", "suite", "suite doble" });
-        JLabel labelDesde = new JLabel("Desde que fecha: ");
-        textDesde = new JTextField();
-        JLabel labelHasta = new JLabel("Hasta que fecha: ");
-        textHasta = new JTextField();
-        JLabel labelDia = new JLabel("Qué día de la semana: ");
-        textDia = new JTextField();
-        JLabel labelTarifa = new JLabel("Tarifa a aplicar: ");
-        textTarifa = new JTextField();
+        JLabel labelNombreArchivo = new JLabel("Nombre del archivo: ");
+        textNombreArchivo = new JTextField();
 
-        panelContenedor.add(labelTipo);
-        panelContenedor.add(comboTipo);
-        panelContenedor.add(labelDesde);
-        panelContenedor.add(textDesde);
-        panelContenedor.add(labelHasta);
-        panelContenedor.add(textHasta);
-        panelContenedor.add(labelDia);
-        panelContenedor.add(textDia);
-        panelContenedor.add(labelTarifa);
-        panelContenedor.add(textTarifa);
+        panelContenedor.add(labelNombreArchivo);
+        panelContenedor.add(textNombreArchivo);
 
         panelCentral.add(panelContenedor, BorderLayout.CENTER);
         // !
@@ -79,12 +63,13 @@ public class CambiarTarifa extends JFrame {
         cargarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tipo = (String) comboTipo.getSelectedItem();
-                String desde = textDesde.getText();
-                String hasta = textHasta.getText();
-                String dia = textDia.getText();
-                String tarifa = textTarifa.getText();
-                // TODO meter data en el txt
+                String fileName = textNombreArchivo.getText();
+                try {
+                    String respuesta = Controller.cargarHabitacionArchivo(fileName);
+                    showSuccessFrame(respuesta);
+                } catch (FileNotFoundException e1) {
+                    showErrorFrame();
+                }
             }
         });
 
@@ -103,14 +88,14 @@ public class CambiarTarifa extends JFrame {
         setVisible(true);
     }
 
-    private void showSuccessFrame() {
+    private void showSuccessFrame(String text) {
         JFrame successFrame = new JFrame("Éxito");
         successFrame.setBackground(Color.WHITE);
         successFrame.setSize(300, 200);
         successFrame.setLocationRelativeTo(null);
 
         ImageIcon successIcon = new ImageIcon("./data/images/check.png");
-        JLabel successLabel = new JLabel("Sesión iniciada correctamente.", successIcon, JLabel.CENTER);
+        JLabel successLabel = new JLabel(text, successIcon, JLabel.CENTER);
         successLabel.setVerticalTextPosition(JLabel.BOTTOM);
         successLabel.setHorizontalTextPosition(JLabel.CENTER);
         successFrame.add(successLabel);
@@ -125,7 +110,9 @@ public class CambiarTarifa extends JFrame {
         errorFrame.setLocationRelativeTo(null);
 
         ImageIcon errorIcon = new ImageIcon("./data/images/error.png");
-        JLabel errorLabel = new JLabel("Error: Usuario o contraseña incorrectos.", errorIcon, JLabel.CENTER);
+        JLabel errorLabel = new JLabel(
+                "Error: No se pudo cargar el archivo.", errorIcon,
+                JLabel.CENTER);
         errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
         errorLabel.setHorizontalTextPosition(JLabel.CENTER);
         errorFrame.add(errorLabel);
