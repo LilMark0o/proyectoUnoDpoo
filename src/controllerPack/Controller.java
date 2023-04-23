@@ -3,13 +3,10 @@ package controllerPack;
 import loginApp.Usuario;
 import serviciosPack.Servicios;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import console.CambiarTarifa;
 import console.InventarioFrame;

@@ -7,7 +7,6 @@ import controllerPack.Controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle.Control;
 
 public class ConsultarHabitacion extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -81,36 +80,6 @@ public class ConsultarHabitacion extends JFrame {
         panelInferior.add(exitButton);
         add(panelInferior, BorderLayout.SOUTH);
         setVisible(true);
-    }
-
-    private void showSuccessFrame(String text) {
-        JFrame successFrame = new JFrame("Éxito");
-        successFrame.setBackground(Color.WHITE);
-        successFrame.setSize(300, 200);
-        successFrame.setLocationRelativeTo(null);
-
-        ImageIcon successIcon = new ImageIcon("./data/images/check.png");
-        JLabel successLabel = new JLabel(text, successIcon, JLabel.CENTER);
-        successLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        successLabel.setHorizontalTextPosition(JLabel.CENTER);
-        successFrame.add(successLabel);
-
-        successFrame.setVisible(true);
-    }
-
-    private void showErrorFrame(String text) {
-        JFrame errorFrame = new JFrame("Error");
-        errorFrame.setBackground(Color.WHITE);
-        errorFrame.setSize(300, 200);
-        errorFrame.setLocationRelativeTo(null);
-
-        ImageIcon errorIcon = new ImageIcon("./data/images/error.png");
-        JLabel errorLabel = new JLabel(text, errorIcon, JLabel.CENTER);
-        errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        errorLabel.setHorizontalTextPosition(JLabel.CENTER);
-        errorFrame.add(errorLabel);
-
-        errorFrame.setVisible(true);
     }
 
 }

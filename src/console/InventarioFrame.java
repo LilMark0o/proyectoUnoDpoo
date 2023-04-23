@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class InventarioFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
