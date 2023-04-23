@@ -3,10 +3,13 @@ package console;
 import javax.swing.*;
 
 import controllerPack.Controller;
+import inventarioPack.Inventario;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class InventarioFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -83,6 +86,10 @@ public class InventarioFrame extends JFrame implements ActionListener {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Inventario.guardarCambios();
+                } catch (IOException e1) {
+                }
                 dispose();
             }
         });
@@ -103,6 +110,10 @@ public class InventarioFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == cambiarTarifa) {
             if (Controller.devolverEmpleo().equals("administracion")) {
                 new CambiarTarifa();
+                if (Inventario.faltaAlgunaTarifa()) {
+                    showInfoFrame(
+                            "Faltan tarifas dentro de los próximos 365 días.");
+                }
             } else {
                 showErrorFrame("Solo administración tiene acceso");
             }
@@ -119,7 +130,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
                 showErrorFrame("Solo administración tiene acceso");
             }
         } else if (e.getSource() == consultaHabitacion) {
-            System.out.println("HOLA, sirvo3");
+            new ConsultarHabitacion();
         } else if (e.getSource() == cambioServicio) {
             if (Controller.devolverEmpleo().equals("administracion")) {
                 // ? new VentanaQueCorresponde
@@ -141,6 +152,49 @@ public class InventarioFrame extends JFrame implements ActionListener {
         errorLabel.setHorizontalTextPosition(JLabel.CENTER);
         errorFrame.add(errorLabel);
 
+        errorFrame.setVisible(true);
+    }
+
+    public static void showInfoFrame(String string) {
+        JFrame errorFrame = new JFrame("Info");
+        errorFrame.setBackground(Color.WHITE);
+        errorFrame.setSize(400, 200);
+        errorFrame.setLocationRelativeTo(null);
+
+        JPanel textPanel = new JPanel();
+        ImageIcon errorIcon = new ImageIcon("./data/images/info.png");
+        JLabel errorLabel = new JLabel(string, errorIcon, JLabel.CENTER);
+        errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
+        errorLabel.setHorizontalTextPosition(JLabel.CENTER);
+        textPanel.add(errorLabel);
+        errorFrame.add(textPanel);
+        errorFrame.setVisible(true);
+    }
+
+    public static void showInfoFrameLargo(String[] text) {
+        JFrame errorFrame = new JFrame("Info");
+        errorFrame.setBackground(Color.WHITE);
+        errorFrame.setSize(400, 200);
+        errorFrame.setLocationRelativeTo(null);
+
+        JPanel textPanel = new JPanel();
+        ImageIcon errorIcon = new ImageIcon("./data/images/info.png");
+        JLabel errorLabel = new JLabel("", errorIcon, JLabel.CENTER);
+        errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
+        errorLabel.setHorizontalTextPosition(JLabel.CENTER);
+        textPanel.add(errorLabel);
+        JLabel vacioLabel = new JLabel("");
+        vacioLabel.setVerticalTextPosition(JLabel.BOTTOM);
+        vacioLabel.setHorizontalTextPosition(JLabel.CENTER);
+        textPanel.add(vacioLabel);
+        for (String texto : text) {
+            texto += ", ";
+            JLabel textoLabel = new JLabel(texto);
+            textoLabel.setVerticalTextPosition(JLabel.BOTTOM);
+            textoLabel.setHorizontalTextPosition(JLabel.CENTER);
+            textPanel.add(textoLabel);
+        }
+        errorFrame.add(textPanel);
         errorFrame.setVisible(true);
     }
 

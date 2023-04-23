@@ -702,6 +702,7 @@
 2023-05-08;lunes;estándar;60000;
 2023-05-08;lunes;suite;75000;
 2023-05-08;lunes;suite doble;90000;
+2023-05-08;lunes;estándar;20000;
 2023-05-09;martes;estándar;60000;
 2023-05-09;martes;suite;75000;
 2023-05-09;martes;suite doble;90000;
@@ -714,6 +715,7 @@
 2023-05-15;lunes;estándar;60000;
 2023-05-15;lunes;suite;75000;
 2023-05-15;lunes;suite doble;90000;
+2023-05-15;lunes;estándar;20000;
 2023-05-16;martes;estándar;60000;
 2023-05-16;martes;suite;75000;
 2023-05-16;martes;suite doble;90000;
@@ -756,6 +758,7 @@
 2023-05-22;lunes;estándar;60000;
 2023-05-22;lunes;suite;75000;
 2023-05-22;lunes;suite doble;90000;
+2023-05-22;lunes;estándar;20000;
 2023-05-23;martes;estándar;60000;
 2023-05-23;martes;suite;75000;
 2023-05-23;martes;suite doble;90000;
@@ -765,6 +768,7 @@
 2023-05-29;lunes;estándar;60000;
 2023-05-29;lunes;suite;75000;
 2023-05-29;lunes;suite doble;90000;
+2023-05-29;lunes;estándar;20000;
 2023-06-04;domingo;estándar;60000;
 2023-06-04;domingo;suite;75000;
 2023-06-04;domingo;suite doble;90000;
@@ -777,6 +781,7 @@
 2023-06-05;lunes;estándar;60000;
 2023-06-05;lunes;suite;75000;
 2023-06-05;lunes;suite doble;90000;
+2023-06-05;lunes;estándar;20000;
 2023-05-31;miércoles;estándar;60000;
 2023-05-31;miércoles;suite;75000;
 2023-05-31;miércoles;suite doble;90000;
@@ -822,6 +827,7 @@
 2023-06-12;lunes;estándar;60000;
 2023-06-12;lunes;suite;75000;
 2023-06-12;lunes;suite doble;90000;
+2023-06-12;lunes;estándar;20000;
 2023-03-29;miércoles;estándar;60000;
 2023-03-29;miércoles;suite;75000;
 2023-03-29;miércoles;suite doble;90000;
@@ -831,6 +837,7 @@
 2023-03-27;lunes;estándar;60000;
 2023-03-27;lunes;suite;75000;
 2023-03-27;lunes;suite doble;90000;
+2023-03-27;lunes;estándar;20000;
 2023-03-26;domingo;estándar;60000;
 2023-03-26;domingo;suite;75000;
 2023-03-26;domingo;suite doble;90000;
@@ -849,6 +856,7 @@
 2023-04-03;lunes;estándar;60000;
 2023-04-03;lunes;suite;75000;
 2023-04-03;lunes;suite doble;90000;
+2023-04-03;lunes;estándar;20000;
 2023-04-04;martes;estándar;60000;
 2023-04-04;martes;suite;75000;
 2023-04-04;martes;suite doble;90000;
@@ -885,6 +893,7 @@
 2023-04-10;lunes;estándar;60000;
 2023-04-10;lunes;suite;75000;
 2023-04-10;lunes;suite doble;90000;
+2023-04-10;lunes;estándar;20000;
 2023-04-11;martes;estándar;60000;
 2023-04-11;martes;suite;75000;
 2023-04-11;martes;suite doble;90000;
@@ -895,6 +904,7 @@
 2023-04-17;lunes;estándar;60000;
 2023-04-17;lunes;suite;75000;
 2023-04-17;lunes;suite doble;90000;
+2023-04-17;lunes;estándar;20000;
 2023-04-18;martes;estándar;60000;
 2023-04-18;martes;suite;75000;
 2023-04-18;martes;suite doble;90000;
@@ -908,6 +918,7 @@
 2023-04-24;lunes;estándar;60000;
 2023-04-24;lunes;suite;75000;
 2023-04-24;lunes;suite doble;90000;
+2023-04-24;lunes;estándar;20000;
 2023-04-25;martes;estándar;60000;
 2023-04-25;martes;suite;75000;
 2023-04-25;martes;suite doble;90000;
@@ -953,6 +964,7 @@
 2023-05-01;lunes;estándar;60000;
 2023-05-01;lunes;suite;75000;
 2023-05-01;lunes;suite doble;90000;
+2023-05-01;lunes;estándar;20000;
 2023-08-07;lunes;estándar;60000;
 2023-08-07;lunes;suite;75000;
 2023-08-07;lunes;suite doble;90000;
@@ -1082,12 +1094,14 @@
 2023-06-19;lunes;estándar;60000;
 2023-06-19;lunes;suite;75000;
 2023-06-19;lunes;suite doble;90000;
+2023-06-19;lunes;estándar;20000;
 2023-06-18;domingo;estándar;60000;
 2023-06-18;domingo;suite;75000;
 2023-06-18;domingo;suite doble;90000;
 2023-06-26;lunes;estándar;60000;
 2023-06-26;lunes;suite;75000;
 2023-06-26;lunes;suite doble;90000;
+2023-06-26;lunes;estándar;20000;
 2023-06-25;domingo;estándar;60000;
 2023-06-25;domingo;suite;75000;
 2023-06-25;domingo;suite doble;90000;

@@ -3,10 +3,12 @@ package console;
 import javax.swing.*;
 
 import controllerPack.Controller;
+import loginApp.Login;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LogInLogOut extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -58,6 +60,10 @@ public class LogInLogOut extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Login.guardarCambios();
+                } catch (IOException e1) {
+                }
                 dispose();
             }
         });

@@ -1,9 +1,13 @@
 package console;
 
 import javax.swing.*;
+
+import serviciosPack.Servicios;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RecepcionFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -73,6 +77,10 @@ public class RecepcionFrame extends JFrame implements ActionListener {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Servicios.guardarCambios();
+                } catch (IOException e1) {
+                }
                 dispose();
             }
         });

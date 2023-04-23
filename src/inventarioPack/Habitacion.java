@@ -214,7 +214,7 @@ public class Habitacion {
 		} else {
 			resp += "no tiene cocina, ";
 		}
-		resp += "le caben " + String.valueOf(capacidadAdulto) + " adultos y ";
+		resp += "le caben " + String.valueOf(capacidadAdulto) + " adultos y, ";
 		resp += "le caben " + String.valueOf(capacidadNino) + " niños.";
 		return resp;
 	}

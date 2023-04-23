@@ -3,11 +3,16 @@ package controllerPack;
 import loginApp.Usuario;
 import serviciosPack.Servicios;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import console.CambiarTarifa;
+import console.InventarioFrame;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
 import loginApp.Login;
@@ -70,26 +75,24 @@ public class Controller {
 		}
 	}
 
-	public static String consultarHabitación(String ID) {
+	public static void consultarHabitación(String ID) {
 		if (Inventario.idYaExiste(ID)) {
 			Habitacion habitacion = Inventario.habitacionPorID(ID);
 			if (habitacion.equals(null)) {
-				return "Tuvimos un problema encontrando la habitación";
+				CambiarTarifa.showErrorFrame("Tuvimos un problema encontrando la habitación");
 			} else {
-				return habitacion.toString();
+				String textoHabitacion = habitacion.toString();
+				String[] partes = textoHabitacion.split(", ");
+				InventarioFrame.showInfoFrameLargo(partes);
 			}
 		} else {
-			return "El ID dado no existe, vuelva a intentarlo con un ID nuevo";
+			InventarioFrame.showInfoFrame("El ID dado no existe, vuelva a intentarlo con un ID nuevo");
 		}
 	}
 
 	public static String cambiarTarifa(String tipoHabitacion, String initialDate, String finalDate, String days,
 			int tarifaNum) {
 		if (usuario.getRol().equals("administracion")) {
-			if (Inventario.faltaAlgunaTarifa()) {
-				System.out.println(
-						"Hay alguna fecha dentro de los próximos 365 días en la que no exista una tarifa asignada para un cierto tipo de habitación.");
-			}
 			Inventario.cambiarTarifa(tipoHabitacion, initialDate, finalDate, days, tarifaNum);
 			return "¡Cambio exitoso!";
 		} else {

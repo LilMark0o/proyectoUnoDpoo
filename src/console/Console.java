@@ -120,8 +120,8 @@ public class Console {
 				} else if (opcion_seleccionada == 3) {
 					// consultar Habitación
 					if (logedIn == true) {
-						String ID = Controller.input("¿Qué ID de habitación desea buscar?: ");
-						System.out.println(Controller.consultarHabitación(ID));
+						// String ID = Controller.input("¿Qué ID de habitación desea buscar?: ");
+						// System.out.println(Controller.consultarHabitación(ID));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
