@@ -1,6 +1,9 @@
 package console;
 
 import javax.swing.*;
+
+import controllerPack.Controller;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,18 +95,53 @@ public class InventarioFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cargarHabitacionArc) {
-            new CargarHabitacionArchivo();
+            if (Controller.devolverEmpleo().equals("administracion")) {
+                new CargarHabitacionArchivo();
+            } else {
+                showErrorFrame("Solo administración tiene acceso");
+            }
         } else if (e.getSource() == cambiarTarifa) {
-            new CambiarTarifa();
+            if (Controller.devolverEmpleo().equals("administracion")) {
+                new CambiarTarifa();
+            } else {
+                showErrorFrame("Solo administración tiene acceso");
+            }
         } else if (e.getSource() == cargarHabitacionInd) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("administracion")) {
+                new CargarHabitacionIndividual();
+            } else {
+                showErrorFrame("Solo administración tiene acceso");
+            }
         } else if (e.getSource() == cambiarMenu) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("administracion")) {
+                // ? new VentanaQueCorresponde
+            } else {
+                showErrorFrame("Solo administración tiene acceso");
+            }
         } else if (e.getSource() == consultaHabitacion) {
             System.out.println("HOLA, sirvo3");
         } else if (e.getSource() == cambioServicio) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("administracion")) {
+                // ? new VentanaQueCorresponde
+            } else {
+                showErrorFrame("Solo administración tiene acceso");
+            }
         }
+    }
+
+    private void showErrorFrame(String text) {
+        JFrame errorFrame = new JFrame("Error");
+        errorFrame.setBackground(Color.WHITE);
+        errorFrame.setSize(300, 200);
+        errorFrame.setLocationRelativeTo(null);
+
+        ImageIcon errorIcon = new ImageIcon("./data/images/error.png");
+        JLabel errorLabel = new JLabel(text, errorIcon, JLabel.CENTER);
+        errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
+        errorLabel.setHorizontalTextPosition(JLabel.CENTER);
+        errorFrame.add(errorLabel);
+
+        errorFrame.setVisible(true);
     }
 
 }

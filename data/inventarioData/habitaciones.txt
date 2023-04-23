@@ -5,3 +5,4 @@ estándar;305;Torre 4;Sí;Sí;No;6;1
 estándar;804;Torre 2;No;No;No;2;0
 suite;312;Torre 1;Sí;Sí;Sí;4;2
 suite doble;416;Torre 4;Sí;No;Sí;3;2
+suite doble;701;Resourt god;Sí;Sí;No;4;2

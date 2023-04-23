@@ -4,10 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.*;
 
 import controllerPack.Controller;
+import inventarioPack.Inventario;
+import loginApp.Login;
+import serviciosPack.Servicios;
 
 public class mainInterface extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -26,7 +30,7 @@ public class mainInterface extends JFrame implements ActionListener {
         } catch (FileNotFoundException e) {
         }
 
-        setTitle("Lights Out Game");
+        setTitle("G-TEL PROPERTY MANAGMENT SYSTEM");
         setSize(1000, 600);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -193,16 +197,18 @@ public class mainInterface extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonLogIn) {
-            System.out.println("HOLA, sirvo");
             new LogInLogOut();
         } else if (e.getSource() == buttonLogOut) {
-            System.out.println("HOLA, sirvo2");
             logedIn = false;
             Controller.logOut();
             actualizarEstadoBotones();
-        } else if (e.getSource() == buttonProfile && logedIn) {
-            System.out.println("HOLA, sirvo3");
         } else if (e.getSource() == buttonExit) {
+            try {
+                Login.guardarCambios();
+                Inventario.guardarCambios();
+                Servicios.guardarCambios();
+            } catch (IOException e1) {
+            }
             dispose();
         } else if (e.getSource() == OpInventario) {
             new InventarioFrame();

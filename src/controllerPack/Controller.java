@@ -15,6 +15,10 @@ import loginApp.Login;
 public class Controller {
 	private static Usuario usuario;
 
+	public static String devolverEmpleo() {
+		return usuario.getRol();
+	}
+
 	public static void startApp() throws FileNotFoundException {
 		Login.cargarLogIn();
 		Inventario.cargarInventario();
