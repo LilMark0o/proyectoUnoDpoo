@@ -3,3 +3,4 @@ Spa;750000;personal
 Guía Turístico;40000;grupal
 Alquilar piscina;250000;grupal
 Caminata en el lago;70000;grupal
+Ping Pong Sub-Acuatico;60000;Personal

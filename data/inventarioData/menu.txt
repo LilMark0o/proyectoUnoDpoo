@@ -9,3 +9,5 @@ Pechuga;En restaurante;12:00;16:00;16000
 Carne;En restaurante;12:00;16:00;16000
 Vino;En restaurante;14:00;22:00;13500
 Bandeja Paisa;En restaurante;12:00;22:00;18000
+Coca Sin Azucar;En restaurante;11:00;22:00;4500
+Pepsi Cero Canada Edition;A habitación;13:00;22:00;4800

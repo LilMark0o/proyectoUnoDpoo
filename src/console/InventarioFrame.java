@@ -56,6 +56,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
         cambiarTarifa.addActionListener(this);
         cargarHabitacionInd.addActionListener(this);
         cambiarMenu.addActionListener(this);
+        cambioServicio.addActionListener(this);
         consultaHabitacion.addActionListener(this);
 
         // Agregar los botones al panel
@@ -110,8 +111,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
             if (Controller.devolverEmpleo().equals("administracion")) {
                 new CambiarTarifa();
                 if (Inventario.faltaAlgunaTarifa()) {
-                    showInfoFrame(
-                            "Faltan tarifas dentro de los próximos 365 días.");
+                    showInfoFrame("Faltan tarifas dentro de los próximos 365 días.");
                 }
             } else {
                 showErrorFrame("Solo administración tiene acceso");
@@ -124,7 +124,12 @@ public class InventarioFrame extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == cambiarMenu) {
             if (Controller.devolverEmpleo().equals("administracion")) {
+
+                new CambiarMenu();
+                String[] message = { "Esta opción sobre-escribe (si ya existe)",
+                        " o crea un elemento nuevo en el menú." };
                 // ? new VentanaQueCorresponde
+                showInfoFrameLargo(message);
             } else {
                 showErrorFrame("Solo administración tiene acceso");
             }
@@ -132,7 +137,11 @@ public class InventarioFrame extends JFrame implements ActionListener {
             new ConsultarHabitacion();
         } else if (e.getSource() == cambioServicio) {
             if (Controller.devolverEmpleo().equals("administracion")) {
+                new CambiarServicio();
+                String[] message = { "Esta opción sobre-escribe (si ya existe)",
+                        " o crea un elemento nuevo en los servicios." };
                 // ? new VentanaQueCorresponde
+                showInfoFrameLargo(message);
             } else {
                 showErrorFrame("Solo administración tiene acceso");
             }

@@ -97,22 +97,22 @@ public class Controller {
 		}
 	}
 
-	public static String cambiarMenu(String nombreMenu, String initialHour, String finalHour, String aCuarto,
+	public static void cambiarMenu(String nombreMenu, String initialHour, String finalHour, String aCuarto,
 			int tarifaNum) {
 		if (usuario.getRol().equals("administracion")) {
 			Inventario.cambiarMenu(nombreMenu, initialHour, finalHour, aCuarto, tarifaNum);
-			return "¡Producto creado/cambiado exitosamente!";
+			InventarioFrame.showInfoFrame("¡Producto cambiado/Creado!");
 		} else {
-			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+			CambiarTarifa.showErrorFrame("Tuvimos un problema cambiando el menú");
 		}
 	}
 
-	public static String cambiarServicios(String nombreServicio, String cantidadPersonas, int precio) {
+	public static void cambiarServicios(String nombreServicio, String cantidadPersonas, int precio) {
 		if (usuario.getRol().equals("administracion")) {
 			Inventario.cambiarServicio(nombreServicio, cantidadPersonas, precio);
-			return "Servicio creado/cambiado exitosamente!";
+			InventarioFrame.showInfoFrame("Servicio cambiado/Creado!");
 		} else {
-			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+			CambiarTarifa.showErrorFrame("Tuvimos un problema cambiando el menú");
 		}
 	}
 
