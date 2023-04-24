@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.Map.Entry;
 
 import console.CambiarTarifa;
+import console.InventarioFrame;
 import controllerPack.Controller;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
@@ -184,9 +185,11 @@ public class Servicios {
 			}
 			String fileName = "Factura_" + reservante.getNombre() + "_" + ID + ".txt";
 			Inventario.guardarArchivo(textoFacturesco, "facturas", fileName);
+			CambiarTarifa.showSuccessFrame("¡Factura generada exitosamente!");
 			return "Factura generada exitosamente, revise la carpeta \"facturas\"";
 
 		} else {
+			CambiarTarifa.showErrorFrame("Este ID no está registrado");
 			return "el ID con el que se quiere generar la factura no se encuentra registrado";
 		}
 	}
@@ -262,6 +265,9 @@ public class Servicios {
 			ArrayList<Huesped> personitas = new ArrayList<Huesped>();
 			personitas.add(reservante);
 			int i = 0;
+			// !
+			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
+			// TODO preguntar a German como seguir xd
 			while (i < cantidadAcompanantes) {
 				String nombreAcompanante = Controller.input("¿Cúal es el nombre del acompañante?");
 				int edadAcompanante = Integer
@@ -271,12 +277,16 @@ public class Servicios {
 				personitas.add(persona);
 				i += 1;
 			}
+			// !
+			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
+			// !
 			ArrayList<Integer> edades = Servicios.personas2Numbers(personitas);
 			Integer adultos = edades.get(0);
 			Integer ninos = edades.get(1);
 			ArrayList<String> habitacionesNecesarias = Inventario.asignarHabitacion(habitacionesVacias,
 					adultos, ninos);
 			if (habitacionesNecesarias == null) {
+				CambiarTarifa.showErrorFrame("Hay habitaciones, pero no para tantas personas");
 				return "Hay habitaciones, pero no para tantas personas";
 			} else {
 				String mensaje = "Se le asignó exitosamente el ID de habitación:";
@@ -286,6 +296,7 @@ public class Servicios {
 				}
 				int costo = Controller.chismosearPrecio(tipoDeHabitacion, fechaInicial, fechaFinal);
 				if (costo == -1) {
+					CambiarTarifa.showErrorFrame("No hay tarifas disponibles para estas fechas");
 					return "No hay tarifas disponibles para estas fechas, lo sentimos :(";
 				} else {
 					mensaje += "\n" + "Su estadía en el hotel costará: $" + String.valueOf(costo);
@@ -294,10 +305,13 @@ public class Servicios {
 						habitacion.hacerReserva(fechaInicial, fechaFinal, personitas);
 					}
 					Servicios.hacerReserva(personitas);
+					String[] mensajeDesintegrado = mensaje.split("\n");
+					InventarioFrame.showInfoFrameLargo(mensajeDesintegrado);
 					return mensaje;
 				}
 			}
 		} else {
+			CambiarTarifa.showErrorFrame("No hay habitaciones de este tipo disponibles para estas fechas");
 			return "No hay habitaciones de este tipo disponibles para estas fechas, lo sentimos :(";
 		}
 	}

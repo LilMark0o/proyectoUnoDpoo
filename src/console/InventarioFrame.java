@@ -148,7 +148,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void showErrorFrame(String text) {
+    void showErrorFrame(String text) {
         JFrame errorFrame = new JFrame("Error");
         errorFrame.setBackground(Color.WHITE);
         errorFrame.setSize(300, 200);

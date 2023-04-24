@@ -2,6 +2,7 @@ package console;
 
 import javax.swing.*;
 
+import controllerPack.Controller;
 import serviciosPack.Servicios;
 
 import java.awt.*;
@@ -95,13 +96,29 @@ public class RecepcionFrame extends JFrame implements ActionListener {
         if (e.getSource() == reservar) {
             System.out.println("HOLA, sirvo");
         } else if (e.getSource() == consultarTarifa) {
-            System.out.println("HOLA, sirvo2");
+            if (Controller.devolverEmpleo().equals("recepcion")) {
+                new ConsultarTarifa();
+            } else {
+                CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
+            }
         } else if (e.getSource() == cancelarReserva) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("recepcion")) {
+                new CancelarReserva();
+            } else {
+                CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
+            }
         } else if (e.getSource() == generarFactura) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("recepcion")) {
+                new GenerarFacturas();
+            } else {
+                CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
+            }
         } else if (e.getSource() == checkOut) {
-            System.out.println("HOLA, sirvo3");
+            if (Controller.devolverEmpleo().equals("recepcion")) {
+                new CheckOut();
+            } else {
+                CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
+            }
         }
     }
 

@@ -148,8 +148,10 @@ public class Controller {
 		if (usuario.getRol().equals("recepcion")) {
 			boolean sePuede = Servicios.checkOut(IDReservante);
 			if (sePuede) {
+				CambiarTarifa.showSuccessFrame("Check-out hecho exitosamente, ¡Vuelva pronto!");
 				return "Check-out hecho exitosamente, ¡Vuelva pronto!";
 			} else {
+				CambiarTarifa.showErrorFrame("No se puede realizar el Check-out");
 				return "No se puede realizar el Check-out, revise si todos sus servicios están pagos, o si los ID está bien escrito";
 			}
 		} else {
@@ -179,26 +181,33 @@ public class Controller {
 		if (usuario.getRol().equals("recepcion")) {
 			int costo = Inventario.tarifaAPagar(tipoHabitacion, initialDate, finalDate);
 			if (costo == -1) {
+				CambiarTarifa.showErrorFrame("No hay tarifas disponibles para estas fechas");
 				return "No hay tarifas disponibles para estas fechas, lo sentimos :(";
 			} else {
+				CambiarTarifa.showSuccessFrame("El monto a pagar sería: $" + String.valueOf(costo));
 				return "El monto a pagar sería: $" + String.valueOf(costo);
 			}
 		} else {
-			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+			CambiarTarifa.showErrorFrame("Sólo un empleado de recepción puede llevar a cabo esta acción");
+			return "Sólo un empleado de recepción puede llevar a cabo esta acción";
 		}
 	}
 
 	public static String cancelarReserva(String ID, String fechaActual) {
 		if (usuario.getRol().equals("recepcion")) {
 			if (Servicios.cancelarReserva(ID, fechaActual) == 1) {
+				CambiarTarifa.showSuccessFrame("la reserva se canceló exitosamente");
 				return "la reserva se canceló exitosamente";
 			} else if (Servicios.cancelarReserva(ID, fechaActual) == 0) {
+				CambiarTarifa.showErrorFrame("No se encontró el ID ingresado");
 				return "No se encontró el ID ingresado";
 			} else {
+				CambiarTarifa.showErrorFrame("No se pueden cancelar en las últimas 48 horas");
 				return "Las reservas no se pueden cancelar en las últimas 48 horas";
 			}
 		} else {
-			return "Sólo un empleado de administración puede llevar a cabo esta acción";
+			CambiarTarifa.showErrorFrame("Sólo un empleado de recepción puede llevar a cabo esta acción");
+			return "Sólo un empleado de recepción puede llevar a cabo esta acción";
 		}
 	}
 
