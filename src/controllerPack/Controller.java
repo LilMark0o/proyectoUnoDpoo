@@ -168,6 +168,7 @@ public class Controller {
 					correoReservante, numeroCelular,
 					cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion);
 		} else {
+			CambiarTarifa.showErrorFrame("Sólo un empleado de recepción puede llevar a cabo esta acción");
 			return "Sólo un empleado de administración puede llevar a cabo esta acción";
 		}
 	}

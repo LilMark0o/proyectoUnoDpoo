@@ -94,7 +94,11 @@ public class RecepcionFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == reservar) {
-            System.out.println("HOLA, sirvo");
+            if (Controller.devolverEmpleo().equals("recepcion")) {
+                new HacerReserva();
+            } else {
+                CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
+            }
         } else if (e.getSource() == consultarTarifa) {
             if (Controller.devolverEmpleo().equals("recepcion")) {
                 new ConsultarTarifa();
