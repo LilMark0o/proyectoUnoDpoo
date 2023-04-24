@@ -4,30 +4,30 @@ import javax.swing.*;
 
 import controllerPack.Controller;
 import inventarioPack.Inventario;
+import serviciosPack.Servicios;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class CambiarServicio extends JFrame {
+public class PagarServicio extends JFrame {
     private static final long serialVersionUID = 1L;
-    private JComboBox<String> comboCantidadPersonas;
-    private JTextField textElemento;
-    private JTextField textPrecio;
+    private JTextField textNombreServicio;
+    private JTextField textID;
     private JButton exitButton;
     private JButton cargarButton;
 
-    public CambiarServicio() {
-        setTitle("Cambiar servicio");
-        setSize(1000, 350);
+    public PagarServicio() {
+        setTitle("Pagar Servicio");
+        setSize(1000, 600);
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
 
         // 1. Crear el título centrado
 
-        JLabel titulo = new JLabel("Cambiar servicio", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Pagar Servicio", SwingConstants.CENTER);
         titulo.setFont(new Font("Serif", Font.PLAIN, 30));
         titulo.setForeground(new Color(48, 48, 48));
 
@@ -38,6 +38,7 @@ public class CambiarServicio extends JFrame {
         JPanel grandeMitad = new JPanel();
         grandeMitad.setLayout(new GridLayout(1, 2));
         String menuText = Controller.mostrarServicios();
+        menuText += Controller.mostrarMenu();
         String[] partes = menuText.split("\n");
 
         JPanel mitadDerechaTexto = new JPanel();
@@ -59,20 +60,15 @@ public class CambiarServicio extends JFrame {
         panelContenedor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 10 pixels de espacio en los
                                                                                     // bordes
 
-        JLabel labelElemento = new JLabel("Elemento a cambiar: ");
-        textElemento = new JTextField();
-        JLabel labelCantidadPersonas = new JLabel("Cuantas personas: ");
-        comboCantidadPersonas = new JComboBox<>(new String[] { "Grupal", "Personal" });
-        JLabel labelPrecio = new JLabel("Precio a aplicar: ");
-        textPrecio = new JTextField();
+        JLabel labelID = new JLabel("ID a cargar (Habitación o Persona): ");
+        textID = new JTextField();
+        JLabel labelNombreServicio = new JLabel("Nombre del servicio: ");
+        textNombreServicio = new JTextField();
 
-        panelContenedor.add(labelElemento);
-        panelContenedor.add(textElemento);
-        panelContenedor.add(labelCantidadPersonas);
-        panelContenedor.add(comboCantidadPersonas);
-        panelContenedor.add(labelPrecio);
-        panelContenedor.add(textPrecio);
-
+        panelContenedor.add(labelID);
+        panelContenedor.add(textID);
+        panelContenedor.add(labelNombreServicio);
+        panelContenedor.add(textNombreServicio);
         panelCentral.add(panelContenedor, BorderLayout.CENTER);
         // !
         grandeMitad.add(panelCentral);
@@ -89,11 +85,10 @@ public class CambiarServicio extends JFrame {
         cargarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String Elemento = textElemento.getText();
-                String CantidadPersonas = (String) comboCantidadPersonas.getSelectedItem();
-                int Precio = Integer.parseInt(textPrecio.getText());
+                String ID = textID.getText();
+                String NombreServicio = textNombreServicio.getText();
                 try {
-                    Controller.cambiarServicios(Elemento, CantidadPersonas, Precio);
+                    Controller.pagarServicio(ID, NombreServicio);
                 } catch (Exception en) {
                     showErrorFrame("Hubo un error");
                 }
@@ -107,6 +102,7 @@ public class CambiarServicio extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Inventario.guardarCambios();
+                    Servicios.guardarCambios();
                 } catch (IOException e1) {
                 }
                 dispose();

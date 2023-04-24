@@ -1,10 +1,13 @@
 312;Guía Turístico;Sí
-303;Ski;No
+303;Ski;Sí
 303;Spa;Sí
 512;Pepsi;No
 512;Bandeja Paisa;Sí
 512;Carne;Sí
 512;Caminata en el lago;No
+701;Ski;Sí
+701;CocaCola;Sí
+701;Huevos;Sí
 804;Spa;Sí
-804;Ski;No
+804;Ski;Sí
 23931203;Spa;Sí

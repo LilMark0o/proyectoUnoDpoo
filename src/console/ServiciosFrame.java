@@ -1,9 +1,14 @@
 package console;
 
 import javax.swing.*;
+
+import inventarioPack.Inventario;
+import serviciosPack.Servicios;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ServiciosFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -65,6 +70,11 @@ public class ServiciosFrame extends JFrame implements ActionListener {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Inventario.guardarCambios();
+                    Servicios.guardarCambios();
+                } catch (IOException e1) {
+                }
                 dispose();
             }
         });
@@ -77,11 +87,11 @@ public class ServiciosFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registarServicioHuesped) {
-            System.out.println("HOLA, sirvo");
+            new RegistrarServicio();
         } else if (e.getSource() == RegistarServicioRestaurante) {
-            System.out.println("HOLA, sirvo2");
+            new RegistrarServicioRestaurante();
         } else if (e.getSource() == PagoServicio) {
-            System.out.println("HOLA, sirvo3");
+            new PagarServicio();
         }
     }
 

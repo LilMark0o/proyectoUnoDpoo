@@ -4,22 +4,23 @@ import javax.swing.*;
 
 import controllerPack.Controller;
 import inventarioPack.Inventario;
+import serviciosPack.Servicios;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class CambiarServicio extends JFrame {
+public class RegistrarServicio extends JFrame {
     private static final long serialVersionUID = 1L;
-    private JComboBox<String> comboCantidadPersonas;
-    private JTextField textElemento;
-    private JTextField textPrecio;
+    private JComboBox<String> comboUsuarioPago;
+    private JTextField textNombreServicio;
+    private JTextField textID;
     private JButton exitButton;
     private JButton cargarButton;
 
-    public CambiarServicio() {
-        setTitle("Cambiar servicio");
+    public RegistrarServicio() {
+        setTitle("Registrar Servicio");
         setSize(1000, 350);
         setLocationRelativeTo(null);
 
@@ -27,7 +28,7 @@ public class CambiarServicio extends JFrame {
 
         // 1. Crear el título centrado
 
-        JLabel titulo = new JLabel("Cambiar servicio", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Registrar Servicio", SwingConstants.CENTER);
         titulo.setFont(new Font("Serif", Font.PLAIN, 30));
         titulo.setForeground(new Color(48, 48, 48));
 
@@ -59,19 +60,19 @@ public class CambiarServicio extends JFrame {
         panelContenedor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 10 pixels de espacio en los
                                                                                     // bordes
 
-        JLabel labelElemento = new JLabel("Elemento a cambiar: ");
-        textElemento = new JTextField();
-        JLabel labelCantidadPersonas = new JLabel("Cuantas personas: ");
-        comboCantidadPersonas = new JComboBox<>(new String[] { "Grupal", "Personal" });
-        JLabel labelPrecio = new JLabel("Precio a aplicar: ");
-        textPrecio = new JTextField();
+        JLabel labelID = new JLabel("ID a cargar (Habitación o Persona): ");
+        textID = new JTextField();
+        JLabel labelNombreServicio = new JLabel("Nombre del servicio: ");
+        textNombreServicio = new JTextField();
+        JLabel labelUsuarioPago = new JLabel("Usuario pagó: ");
+        comboUsuarioPago = new JComboBox<>(new String[] { "Sí", "No" });
 
-        panelContenedor.add(labelElemento);
-        panelContenedor.add(textElemento);
-        panelContenedor.add(labelCantidadPersonas);
-        panelContenedor.add(comboCantidadPersonas);
-        panelContenedor.add(labelPrecio);
-        panelContenedor.add(textPrecio);
+        panelContenedor.add(labelID);
+        panelContenedor.add(textID);
+        panelContenedor.add(labelNombreServicio);
+        panelContenedor.add(textNombreServicio);
+        panelContenedor.add(labelUsuarioPago);
+        panelContenedor.add(comboUsuarioPago);
 
         panelCentral.add(panelContenedor, BorderLayout.CENTER);
         // !
@@ -89,11 +90,11 @@ public class CambiarServicio extends JFrame {
         cargarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String Elemento = textElemento.getText();
-                String CantidadPersonas = (String) comboCantidadPersonas.getSelectedItem();
-                int Precio = Integer.parseInt(textPrecio.getText());
+                String ID = textID.getText();
+                String NombreServicio = textNombreServicio.getText();
+                String UsuarioPago = (String) comboUsuarioPago.getSelectedItem();
                 try {
-                    Controller.cambiarServicios(Elemento, CantidadPersonas, Precio);
+                    Controller.cargarServicio(ID, NombreServicio, UsuarioPago);
                 } catch (Exception en) {
                     showErrorFrame("Hubo un error");
                 }
@@ -107,6 +108,7 @@ public class CambiarServicio extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Inventario.guardarCambios();
+                    Servicios.guardarCambios();
                 } catch (IOException e1) {
                 }
                 dispose();

@@ -210,13 +210,14 @@ public class Console {
 					System.out.println(Controller.mostrarServicios());
 					// registrar servicios por ID
 					if (logedIn == true) {
-						String ID = Controller
-								.input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID) ");
-						String nombreServicio = Controller
-								.input("¿Qué servicio se va a pagar? ");
-						String pagado = Controller
-								.input("¿El usuario pagó por este servicio? (Sí o No) ");
-						System.out.println(Controller.cargarServicio(ID, nombreServicio, pagado));
+						// String ID = Controller
+						// .input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID)
+						// ");
+						// String nombreServicio = Controller
+						// .input("¿Qué servicio se va a pagar? ");
+						// String pagado = Controller
+						// .input("¿El usuario pagó por este servicio? (Sí o No) ");
+						// System.out.println(Controller.cargarServicio(ID, nombreServicio, pagado));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
@@ -224,13 +225,15 @@ public class Console {
 					// cargar Individual
 					System.out.println(Controller.mostrarMenu());
 					if (logedIn == true) {
-						String ID = Controller
-								.input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID) ");
-						String nombreServicio = Controller
-								.input("¿Qué servicio se va a pagar? ");
-						String pagado = Controller
-								.input("¿El usuario pagó por este servicio? (Sí o No) ");
-						System.out.println(Controller.cargarServicioRestaurante(ID, nombreServicio, pagado));
+						// String ID = Controller
+						// .input("¿A qué ID se va a registrar el servicio? (habitación ID o persona ID)
+						// ");
+						// String nombreServicio = Controller
+						// .input("¿Qué servicio se va a pagar? ");
+						// String pagado = Controller
+						// .input("¿El usuario pagó por este servicio? (Sí o No) ");
+						// System.out.println(Controller.cargarServicioRestaurante(ID, nombreServicio,
+						// pagado));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}

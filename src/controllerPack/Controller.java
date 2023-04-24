@@ -116,19 +116,17 @@ public class Controller {
 		}
 	}
 
-	public static String cargarServicio(String ID, String nombreServicio, String pagado) {
-		String resp = Servicios.registrarServicio(ID, nombreServicio, pagado);
-		return resp;
+	public static void cargarServicio(String ID, String nombreServicio, String pagado) {
+		Servicios.registrarServicio(ID, nombreServicio, pagado);
 	}
 
-	public static String cargarServicioRestaurante(String ID, String nombreServicio, String pagado) {
-		String resp = Servicios.registrarServicioRestaurante(ID, nombreServicio, pagado);
-		return resp;
+	public static void cargarServicioRestaurante(String ID, String nombreServicio, String pagado) {
+		Servicios.registrarServicioRestaurante(ID, nombreServicio, pagado);
 	}
 
 	public static String pagarServicio(String ID, String nombreServicio) {
-		String resp = Servicios.pagarServicio(ID, nombreServicio);
-		return resp;
+		Servicios.pagarServicio(ID, nombreServicio);
+		return "";
 	}
 
 	public static String mostrarMenu() {

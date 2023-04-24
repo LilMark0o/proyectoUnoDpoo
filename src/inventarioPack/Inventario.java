@@ -75,7 +75,7 @@ public class Inventario {
 
 	public static String mostrarServicios() {
 		String txt = "";
-		txt += "El menú consiste de: ";
+		txt += "Los servicios consisten de: ";
 		for (Servicio servicio : servicios) {
 			txt += "\n";
 			txt += "Servicio: " + servicio.getNombre();

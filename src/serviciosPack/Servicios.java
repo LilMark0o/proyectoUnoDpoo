@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
+import console.CambiarTarifa;
 import controllerPack.Controller;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
@@ -30,10 +31,11 @@ public class Servicios {
 		cargarHuespedes();
 	}
 
-	public static String registrarServicio(String ID, String servicioNombre, String pagadoEnElMomento) {
+	public static void registrarServicio(String ID, String servicioNombre, String pagadoEnElMomento) {
 		Servicio servicioBuscado = Inventario.buscarServicio(servicioNombre);
 		if (servicioBuscado.equals(null)) {
-			return "No se ha encontrado ese servicio, intente con otro nombre";
+			CambiarTarifa.showErrorFrame("No se ha encontrado ese servicio");
+
 		} else {
 			boolean pagado = false;
 			if (pagadoEnElMomento.equals("Sí")) {
@@ -49,7 +51,8 @@ public class Servicios {
 				servicios.add(servicioBuscado);
 				registroServicios.put(ID, servicios);
 			}
-			return "Servicio encontrado y cargado exitosamente al usuario";
+			CambiarTarifa.showSuccessFrame("¡Servicio encontrado y cargado exitosamente!");
+
 		}
 	}
 
@@ -77,10 +80,10 @@ public class Servicios {
 		grupos.put(reservante.getIDgrupo(), huespedesAAlojar);
 	}
 
-	public static String registrarServicioRestaurante(String ID, String servicioNombre, String pagadoEnElMomento) {
+	public static void registrarServicioRestaurante(String ID, String servicioNombre, String pagadoEnElMomento) {
 		ServicioRestaurante servicioBuscado = Inventario.buscarServicioRestauraServicio(servicioNombre);
 		if (servicioBuscado.equals(null)) {
-			return "No se ha encontrado ese servicio, intente con otro nombre";
+			CambiarTarifa.showErrorFrame("No se ha encontrado este producto");
 		} else {
 			boolean pagado = false;
 			if (pagadoEnElMomento.equals("Sí")) {
@@ -96,11 +99,11 @@ public class Servicios {
 				servicios.add(servicioBuscado);
 				registroServicios.put(ID, servicios);
 			}
-			return "Servicio encontrado y cargado exitosamente al usuario";
+			CambiarTarifa.showSuccessFrame("Producto encontrado y cargado exitosamente!");
 		}
 	}
 
-	public static String pagarServicio(String ID, String servicioNombre) {
+	public static void pagarServicio(String ID, String servicioNombre) {
 		if (registroServicios.containsKey(ID)) {
 			ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(ID);
 			boolean existe = false;
@@ -115,13 +118,15 @@ public class Servicios {
 				}
 			}
 			if (existe) {
-				return "¡pago realizado exitosamente!";
+				CambiarTarifa.showSuccessFrame("¡pago realizado exitosamente!!");
 			} else {
-				return "no se encontró el servicio a pagar, pago rechazado";
+				CambiarTarifa.showErrorFrame("No se encontró el servicio a pagar, pago rechazado");
+
 			}
 
 		} else {
-			return "el ID con el que se quiere pagar no se encuentra registrado, pago rechazado";
+			CambiarTarifa.showErrorFrame("El ID con el que se quiere pagar no se encuentra registrado");
+
 		}
 	}
 
