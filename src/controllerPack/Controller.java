@@ -164,9 +164,14 @@ public class Controller {
 			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
 			String fechaFinal, String tipoDeHabitacion) {
 		if (usuario.getRol().equals("recepcion")) {
-			return Servicios.generarReserva(nombreReservante, edad, IDReservante,
-					correoReservante, numeroCelular,
-					cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion);
+			try {
+				return Servicios.generarReserva(nombreReservante, edad, IDReservante,
+						correoReservante, numeroCelular,
+						cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+			return "";
 		} else {
 			CambiarTarifa.showErrorFrame("Sólo un empleado de recepción puede llevar a cabo esta acción");
 			return "Sólo un empleado de administración puede llevar a cabo esta acción";

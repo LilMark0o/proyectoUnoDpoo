@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import console.CambiarTarifa;
 import console.InventarioFrame;
+import console.PreguntarAcompanante;
 import controllerPack.Controller;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
@@ -21,6 +22,11 @@ public class Servicios {
 	private static ArrayList<Huesped> huespeds;
 	private static ArrayList<Reservante> reservantes;
 	private static HashMap<Integer, ArrayList<Huesped>> grupos;
+
+	public static int IDGrupoActual;
+	public static boolean segui;
+	public static ArrayList<Huesped> personitasImportadas;
+	public static int acompanantesActual;
 
 	public static void cargarServicios() throws FileNotFoundException {
 		grupos = new HashMap<Integer, ArrayList<Huesped>>();
@@ -256,7 +262,7 @@ public class Servicios {
 
 	public static String generarReserva(String nombreReservante, int edad, String IDReservante,
 			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
-			String fechaFinal, String tipoDeHabitacion) {
+			String fechaFinal, String tipoDeHabitacion) throws InterruptedException {
 		ArrayList<String> habitacionesVacias = Inventario.hayHabitacion(tipoDeHabitacion, fechaInicial, fechaFinal);
 		if (habitacionesVacias.size() > 0) {
 			int IdGrupal = Servicios.generarIdGrupo();
@@ -264,19 +270,31 @@ public class Servicios {
 					numeroCelular, cantidadAcompanantes, IdGrupal, fechaInicial, fechaFinal);
 			ArrayList<Huesped> personitas = new ArrayList<Huesped>();
 			personitas.add(reservante);
-			int i = 0;
 			// !
 			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
 			// TODO preguntar a German como seguir xd
-			while (i < cantidadAcompanantes) {
-				String nombreAcompanante = Controller.input("¿Cúal es el nombre del acompañante?");
-				int edadAcompanante = Integer
-						.parseInt(Controller.input("¿Cúal es la edad del acompañante? "));
-				String IDAcompanante = Controller.input("¿Cúal es el ID del acompañante?");
-				Huesped persona = new Huesped(nombreAcompanante, edadAcompanante, IDAcompanante, IdGrupal);
+			IDGrupoActual = IdGrupal;
+			personitasImportadas = new ArrayList<Huesped>();
+			acompanantesActual = cantidadAcompanantes;
+			HiloMensaje hilo = new HiloMensaje();
+			hilo.start();
+			// hilo.join();
+			for (Huesped persona : personitasImportadas) {
 				personitas.add(persona);
-				i += 1;
 			}
+
+			// int i = 0;
+			// while (i < cantidadAcompanantes) {
+			// String nombreAcompanante = Controller.input("¿Cúal es el nombre del
+			// acompañante?");
+			// int edadAcompanante = Integer
+			// .parseInt(Controller.input("¿Cúal es la edad del acompañante? "));
+			// String IDAcompanante = Controller.input("¿Cúal es el ID del acompañante?");
+			// Huesped persona = new Huesped(nombreAcompanante, edadAcompanante,
+			// IDAcompanante, IdGrupal);
+			// personitas.add(persona);
+			// i += 1;
+			// }
 			// !
 			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
 			// !
@@ -577,5 +595,24 @@ public class Servicios {
 			vamosBien = false;
 		}
 		return vamosBien;
+	}
+}
+
+class HiloMensaje extends Thread {
+
+	public void run() {
+		// Imprimimos un mensaje cada segundo durante 5 segundos
+		for (int i = 1; i <= Servicios.acompanantesActual; i++) {
+			System.out.println("Acompañante num: " + i + " añadido.");
+			try {
+				Servicios.segui = false;
+				new PreguntarAcompanante();
+				while (!Servicios.segui) {
+					Thread.sleep(500); // Esperamos 0.5 segundo antes de imprimir el siguiente mensaje
+				}
+			} catch (InterruptedException e) {
+			}
+		}
+
 	}
 }

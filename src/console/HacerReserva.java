@@ -7,7 +7,6 @@ import controllerPack.Controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 public class HacerReserva extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -25,7 +24,7 @@ public class HacerReserva extends JFrame {
     private JButton cargarButton;
 
     public HacerReserva() {
-        setTitle("Cargar habitación(individual)");
+        setTitle("Hacer Reserva");
         setSize(500, 550);
         setLocationRelativeTo(null);
 
@@ -33,7 +32,7 @@ public class HacerReserva extends JFrame {
 
         // 1. Crear el título centrado
 
-        JLabel titulo = new JLabel("Cargar habitación(individual)", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Hacer Reserva", SwingConstants.CENTER);
         titulo.setFont(new Font("Serif", Font.PLAIN, 30));
         titulo.setForeground(new Color(48, 48, 48));
 
@@ -64,7 +63,7 @@ public class HacerReserva extends JFrame {
         textCorreoReservante = new JTextField();
         JLabel labelAcompanantes = new JLabel("Acompañantes: ");
         textAcompanantes = new JTextField();
-        JLabel labelCelularReservante = new JLabel("Capacidad de niños: ");
+        JLabel labelCelularReservante = new JLabel("Celular del reservante: ");
         textCelularReservante = new JTextField();
         JLabel labelDesde = new JLabel("Desde que fecha: (ej: 2023-03-23)");
         textDesde = new JTextField();
@@ -115,8 +114,14 @@ public class HacerReserva extends JFrame {
                 String desde = textDesde.getText();
                 String hasta = textHasta.getText();
                 String tipo = (String) comboTipo.getSelectedItem();
+                System.out.println(Acompanantes);
+                if (Acompanantes == 0) {
+                    System.out.println("Error");
+                }
+
                 Controller.generarReserva(NombreReservante, edadReservante, IDReservante,
                         CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo);
+                CambiarTarifa.showSuccessFrame("Ponga los acompañantes y su reserva estará lista");
             }
         });
 
@@ -134,35 +139,4 @@ public class HacerReserva extends JFrame {
         add(panelInferior, BorderLayout.SOUTH);
         setVisible(true);
     }
-
-    private void showSuccessFrame(String text) {
-        JFrame successFrame = new JFrame("Éxito");
-        successFrame.setBackground(Color.WHITE);
-        successFrame.setSize(300, 200);
-        successFrame.setLocationRelativeTo(null);
-
-        ImageIcon successIcon = new ImageIcon("./data/images/check.png");
-        JLabel successLabel = new JLabel(text, successIcon, JLabel.CENTER);
-        successLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        successLabel.setHorizontalTextPosition(JLabel.CENTER);
-        successFrame.add(successLabel);
-
-        successFrame.setVisible(true);
-    }
-
-    private void showErrorFrame(String text) {
-        JFrame errorFrame = new JFrame("Error");
-        errorFrame.setBackground(Color.WHITE);
-        errorFrame.setSize(300, 200);
-        errorFrame.setLocationRelativeTo(null);
-
-        ImageIcon errorIcon = new ImageIcon("./data/images/error.png");
-        JLabel errorLabel = new JLabel(text, errorIcon, JLabel.CENTER);
-        errorLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        errorLabel.setHorizontalTextPosition(JLabel.CENTER);
-        errorFrame.add(errorLabel);
-
-        errorFrame.setVisible(true);
-    }
-
 }

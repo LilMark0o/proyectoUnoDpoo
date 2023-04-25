@@ -1,4 +1,4 @@
-CocaCola;A habitación;07:00;23:00;4500
+CocaCola;En restaurante;12:00;20:00;4200
 Pepsi;A habitación;07:00;23:00;4500
 Huevos;A habitación;07:00;12:00;9500
 Jugo de naranja;A habitación;07:00;12:00;7500
