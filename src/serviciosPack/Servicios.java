@@ -277,8 +277,13 @@ public class Servicios {
 			personitasImportadas = new ArrayList<Huesped>();
 			acompanantesActual = cantidadAcompanantes;
 			HiloMensaje hilo = new HiloMensaje();
+
+			// TODO LO QUE PASA AQUÍ ES QUE EL PROGRAMA NO ESPERA A HILOMENSAJE
+			// TODO Y SIGUE DERECHO :(
+
 			hilo.start();
 			// hilo.join();
+			// TODO Y SI PONGO UN .JOIN ME CAGO TODO XD
 			for (Huesped persona : personitasImportadas) {
 				personitas.add(persona);
 			}
