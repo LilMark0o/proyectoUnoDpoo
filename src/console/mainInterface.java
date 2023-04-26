@@ -15,7 +15,7 @@ import serviciosPack.Servicios;
 
 public class mainInterface extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
-    public static Boolean logedIn = true;
+    public static Boolean logedIn = false;
     private static JLabel buttonProfile;
     private static JButton buttonLogIn;
     private static JButton buttonLogOut;

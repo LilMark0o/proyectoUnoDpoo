@@ -4,10 +4,12 @@ import javax.swing.*;
 
 import controllerPack.Controller;
 import serviciosPack.Huesped;
+import serviciosPack.Servicios;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HacerReserva extends JFrame {
@@ -141,7 +143,6 @@ public class HacerReserva extends JFrame {
 
                 Controller.generarReserva(NombreReservante, edadReservante, IDReservante,
                         CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo, personitasImportadas);
-                CambiarTarifa.showSuccessFrame("Ponga los acompañantes y su reserva estará lista");
             }
         });
 
@@ -150,6 +151,10 @@ public class HacerReserva extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Servicios.guardarCambios();
+                } catch (IOException e1) {
+                }
                 dispose();
             }
         });
