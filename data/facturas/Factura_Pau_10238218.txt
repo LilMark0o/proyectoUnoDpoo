@@ -1,0 +1,9 @@
+-----  Factura a nombre de Pau -----
+---  Con fecha de ingreso de 2023-03-23 ---
+---  Y fecha de salida de 2023-03-27 ---
+En su estadía se reservó la habitación de tipo estándar con ID305
+La tarifa pagada fue de: $140000
+El huesped Pau consumió:
+El servicio Ski, que tiene un costo de 65000 fue pagado exitosamente.
+El servicio Spa, que tiene un costo de 750000 fue pagado exitosamente.
+El servicio Alquilar piscina, que tiene un costo de 250000 NO ha sido pagado.

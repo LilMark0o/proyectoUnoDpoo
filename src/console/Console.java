@@ -272,28 +272,29 @@ public class Console {
 					// Reservar
 					if (logedIn == true) {
 						// ! hacer función grande para esta parte
-						String nombreReservante = Controller
-								.input("¿Cúal es el nombre del reservante?");
-						int edad = Integer.parseInt(Controller
-								.input("¿Cúal es la edad del reservante?"));
-						String IDReservante = Controller
-								.input("¿Cúal es el ID del reservante?");
-						String correoReservante = Controller
-								.input("¿Cúal es el correo del reservante?");
-						Long numeroCelular = Long.parseLong(Controller
-								.input("¿Cual es el número de celular del reservante? (sin el +57) "));
-						int cantidadAcompanantes = Integer.parseInt(Controller
-								.input("¿Cúantos acompañantes tiene el reservante?"));
-						// ? El ID del grupo se generará luego
-						String fechaInicial = Controller
-								.input("¿Desde que fecha empieza? (ej:2023-03-23 ");
-						String fechaFinal = Controller
-								.input("¿Hasta que fecha quiere estar? (ej:2023-03-23) ");
-						String tipoDeHabitacion = Controller
-								.input("¿Qué tipo de habitación quiere? (estándar, suite, suite doble) ");
-						System.out.println(Controller.generarReserva(nombreReservante, edad, IDReservante,
-								correoReservante, numeroCelular,
-								cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion));
+						// String nombreReservante = Controller
+						// .input("¿Cúal es el nombre del reservante?");
+						// int edad = Integer.parseInt(Controller
+						// .input("¿Cúal es la edad del reservante?"));
+						// String IDReservante = Controller
+						// .input("¿Cúal es el ID del reservante?");
+						// String correoReservante = Controller
+						// .input("¿Cúal es el correo del reservante?");
+						// Long numeroCelular = Long.parseLong(Controller
+						// .input("¿Cual es el número de celular del reservante? (sin el +57) "));
+						// int cantidadAcompanantes = Integer.parseInt(Controller
+						// .input("¿Cúantos acompañantes tiene el reservante?"));
+						// // ? El ID del grupo se generará luego
+						// String fechaInicial = Controller
+						// .input("¿Desde que fecha empieza? (ej:2023-03-23 ");
+						// String fechaFinal = Controller
+						// .input("¿Hasta que fecha quiere estar? (ej:2023-03-23) ");
+						// String tipoDeHabitacion = Controller
+						// .input("¿Qué tipo de habitación quiere? (estándar, suite, suite doble) ");
+						// System.out.println(Controller.generarReserva(nombreReservante, edad,
+						// IDReservante,
+						// correoReservante, numeroCelular,
+						// cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}

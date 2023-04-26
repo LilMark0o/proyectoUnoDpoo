@@ -3,7 +3,6 @@ package console;
 import javax.swing.*;
 
 import serviciosPack.Huesped;
-import serviciosPack.Servicios;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -67,7 +66,7 @@ public class PreguntarAcompanante extends JFrame {
         panelInferior.setLayout(new GridLayout(1, 3));
         // Aquí puedes agregar tus componentes al panel inferior
         // ? cargar button
-        cargarButton = new JButton("Buscar");
+        cargarButton = new JButton("Cargar");
 
         cargarButton.addActionListener(new ActionListener() {
             @Override
@@ -75,9 +74,9 @@ public class PreguntarAcompanante extends JFrame {
                 String nombre = textNombre.getText();
                 int edad = Integer.parseInt(textEdad.getText());
                 String ID = textDesde.getText();
-                Huesped persona = new Huesped(nombre, edad, ID, Servicios.IDGrupoActual);
-                Servicios.personitasImportadas.add(persona);
-                Servicios.segui = true;
+                Huesped persona = new Huesped(nombre, edad, ID, 100);
+                HacerReserva.personitasImportadas.add(persona);
+                HacerReserva.actualizarContador();
                 dispose();
             }
         });

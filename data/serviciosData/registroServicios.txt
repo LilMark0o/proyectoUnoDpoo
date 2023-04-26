@@ -11,3 +11,6 @@
 804;Spa;Sí
 804;Ski;Sí
 23931203;Spa;Sí
+10238218;Ski;Sí
+10238218;Spa;Sí
+10238218;Alquilar piscina;No

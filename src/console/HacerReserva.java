@@ -3,10 +3,12 @@ package console;
 import javax.swing.*;
 
 import controllerPack.Controller;
+import serviciosPack.Huesped;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class HacerReserva extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -18,14 +20,18 @@ public class HacerReserva extends JFrame {
     private JTextField textIDEdad;
 
     private JTextField textCorreoReservante;
-    private JTextField textAcompanantes;
     private JTextField textCelularReservante;
     private JButton exitButton;
     private JButton cargarButton;
 
+    private JButton acompananteButton;
+    private static JLabel acompananteLabel;
+    private static int acompanantesLabelText = 0;
+    public static ArrayList<Huesped> personitasImportadas;
+
     public HacerReserva() {
         setTitle("Hacer Reserva");
-        setSize(500, 550);
+        setSize(550, 550);
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
@@ -62,7 +68,6 @@ public class HacerReserva extends JFrame {
         JLabel labelCorreoReservante = new JLabel("Correo Reservante: ");
         textCorreoReservante = new JTextField();
         JLabel labelAcompanantes = new JLabel("Acompañantes: ");
-        textAcompanantes = new JTextField();
         JLabel labelCelularReservante = new JLabel("Celular del reservante: ");
         textCelularReservante = new JTextField();
         JLabel labelDesde = new JLabel("Desde que fecha: (ej: 2023-03-23)");
@@ -81,7 +86,22 @@ public class HacerReserva extends JFrame {
         panelContenedor.add(labelCelularReservante);
         panelContenedor.add(textCelularReservante);
         panelContenedor.add(labelAcompanantes);
-        panelContenedor.add(textAcompanantes);
+        //
+        personitasImportadas = new ArrayList<Huesped>();
+        JPanel acompananteInfo = new JPanel();
+        acompananteInfo.setLayout(new GridLayout(1, 2));
+        acompananteLabel = new JLabel("Cargados: " + acompanantesLabelText);
+        acompananteLabel.setHorizontalAlignment(JLabel.CENTER);
+        acompananteInfo.add(acompananteLabel);
+        acompananteButton = new JButton("Añadir Acompañante");
+        acompananteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PreguntarAcompanante();
+            }
+        });
+        acompananteInfo.add(acompananteButton);
+        panelContenedor.add(acompananteInfo);
         //
         panelContenedor.add(labelDesde);
         panelContenedor.add(textDesde);
@@ -110,7 +130,7 @@ public class HacerReserva extends JFrame {
                 String IDReservante = textIDReservante.getText();
                 String CorreoReservante = textCorreoReservante.getText();
                 Long CelularReservante = Long.parseLong(textCelularReservante.getText());
-                int Acompanantes = Integer.parseInt(textAcompanantes.getText());
+                int Acompanantes = acompanantesLabelText;
                 String desde = textDesde.getText();
                 String hasta = textHasta.getText();
                 String tipo = (String) comboTipo.getSelectedItem();
@@ -120,7 +140,7 @@ public class HacerReserva extends JFrame {
                 }
 
                 Controller.generarReserva(NombreReservante, edadReservante, IDReservante,
-                        CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo);
+                        CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo, personitasImportadas);
                 CambiarTarifa.showSuccessFrame("Ponga los acompañantes y su reserva estará lista");
             }
         });
@@ -138,5 +158,10 @@ public class HacerReserva extends JFrame {
         panelInferior.add(exitButton);
         add(panelInferior, BorderLayout.SOUTH);
         setVisible(true);
+    }
+
+    public static void actualizarContador() {
+        acompanantesLabelText += 1;
+        acompananteLabel.setText("Acompañantes: " + acompanantesLabelText);
     }
 }

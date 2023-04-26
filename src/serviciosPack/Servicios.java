@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import console.CambiarTarifa;
 import console.InventarioFrame;
-import console.PreguntarAcompanante;
 import controllerPack.Controller;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
@@ -22,11 +21,6 @@ public class Servicios {
 	private static ArrayList<Huesped> huespeds;
 	private static ArrayList<Reservante> reservantes;
 	private static HashMap<Integer, ArrayList<Huesped>> grupos;
-
-	public static int IDGrupoActual;
-	public static boolean segui;
-	public static ArrayList<Huesped> personitasImportadas;
-	public static int acompanantesActual;
 
 	public static void cargarServicios() throws FileNotFoundException {
 		grupos = new HashMap<Integer, ArrayList<Huesped>>();
@@ -262,7 +256,7 @@ public class Servicios {
 
 	public static String generarReserva(String nombreReservante, int edad, String IDReservante,
 			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
-			String fechaFinal, String tipoDeHabitacion) throws InterruptedException {
+			String fechaFinal, String tipoDeHabitacion, ArrayList<Huesped> acompanantes) throws InterruptedException {
 		ArrayList<String> habitacionesVacias = Inventario.hayHabitacion(tipoDeHabitacion, fechaInicial, fechaFinal);
 		if (habitacionesVacias.size() > 0) {
 			int IdGrupal = Servicios.generarIdGrupo();
@@ -270,24 +264,13 @@ public class Servicios {
 					numeroCelular, cantidadAcompanantes, IdGrupal, fechaInicial, fechaFinal);
 			ArrayList<Huesped> personitas = new ArrayList<Huesped>();
 			personitas.add(reservante);
-			// !
-			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
-			// TODO preguntar a German como seguir xd
-			IDGrupoActual = IdGrupal;
-			personitasImportadas = new ArrayList<Huesped>();
-			acompanantesActual = cantidadAcompanantes;
-			HiloMensaje hilo = new HiloMensaje();
-
-			// TODO LO QUE PASA AQUÍ ES QUE EL PROGRAMA NO ESPERA A HILOMENSAJE
-			// TODO Y SIGUE DERECHO :(
-
-			hilo.start();
-			// hilo.join();
-			// TODO Y SI PONGO UN .JOIN ME CAGO TODO XD
-			for (Huesped persona : personitasImportadas) {
+			for (Huesped persona : acompanantes) {
+				persona.setIDgrupo(IdGrupal);
 				personitas.add(persona);
 			}
-
+			// !
+			// ! GRAN PROBLEMA AQUI, NO SE QUE HACER
+			// !
 			// int i = 0;
 			// while (i < cantidadAcompanantes) {
 			// String nombreAcompanante = Controller.input("¿Cúal es el nombre del
@@ -600,24 +583,5 @@ public class Servicios {
 			vamosBien = false;
 		}
 		return vamosBien;
-	}
-}
-
-class HiloMensaje extends Thread {
-
-	public void run() {
-		// Imprimimos un mensaje cada segundo durante 5 segundos
-		for (int i = 1; i <= Servicios.acompanantesActual; i++) {
-			System.out.println("Acompañante num: " + i + " añadido.");
-			try {
-				Servicios.segui = false;
-				new PreguntarAcompanante();
-				while (!Servicios.segui) {
-					Thread.sleep(500); // Esperamos 0.5 segundo antes de imprimir el siguiente mensaje
-				}
-			} catch (InterruptedException e) {
-			}
-		}
-
 	}
 }

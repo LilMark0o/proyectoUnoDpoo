@@ -52,7 +52,7 @@ public class CambiarTarifa extends JFrame {
         textDesde = new JTextField();
         JLabel labelHasta = new JLabel("Hasta que fecha: (ej: 2023-04-04)");
         textHasta = new JTextField();
-        JLabel labelDia = new JLabel("Qué día de la semana: ");
+        JLabel labelDia = new JLabel("Qué día de la semana: (minúscula + tildes) ");
         textDia = new JTextField();
         JLabel labelTarifa = new JLabel("Tarifa a aplicar: ");
         textTarifa = new JTextField();
