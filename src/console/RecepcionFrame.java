@@ -17,6 +17,7 @@ public class RecepcionFrame extends JFrame implements ActionListener {
     private JButton cancelarReserva;
     private JButton generarFactura;
     private JButton checkOut;
+    private JButton mostrarGrafica;
     private JButton exitButton;
 
     public RecepcionFrame() {
@@ -50,11 +51,13 @@ public class RecepcionFrame extends JFrame implements ActionListener {
         cancelarReserva = new JButton("Cancelar Reserva ");
         generarFactura = new JButton("Generar Factura");
         checkOut = new JButton("Check-Out");
+        mostrarGrafica = new JButton("Mostrar Gráfica");
         reservar.addActionListener(this);
         consultarTarifa.addActionListener(this);
         cancelarReserva.addActionListener(this);
         generarFactura.addActionListener(this);
         checkOut.addActionListener(this);
+        mostrarGrafica.addActionListener(this);
 
         // Agregar los botones al panel
         buttonPanel.add(reservar);
@@ -62,6 +65,7 @@ public class RecepcionFrame extends JFrame implements ActionListener {
         buttonPanel.add(cancelarReserva);
         buttonPanel.add(generarFactura);
         buttonPanel.add(checkOut);
+        buttonPanel.add(mostrarGrafica);
 
         panelCentral.add(buttonPanel, BorderLayout.CENTER);
         // !
@@ -123,6 +127,8 @@ public class RecepcionFrame extends JFrame implements ActionListener {
             } else {
                 CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
             }
+        } else if (e.getSource() == mostrarGrafica) {
+            new DiagramaDeBarras();
         }
     }
 

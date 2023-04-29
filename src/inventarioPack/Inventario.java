@@ -37,6 +37,10 @@ public class Inventario {
 		habitaciones.add(habitacion);
 	}
 
+	public static ArrayList<Habitacion> getHabitaciones() {
+		return (ArrayList<Habitacion>) habitaciones;
+	}
+
 	public static boolean idYaExiste(String ID) {
 		boolean yaExiste = false;
 		for (Habitacion habitacion : habitaciones) {

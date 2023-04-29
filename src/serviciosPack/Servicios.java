@@ -32,6 +32,30 @@ public class Servicios {
 		cargarHuespedes();
 	}
 
+	public static ArrayList<Integer> dataForChart() {
+		ArrayList<Integer> lista = new ArrayList<Integer>();
+		for (int i = 1; i <= 12; i++) {
+			lista.add(0);
+			lista.add(0);
+		}
+		ArrayList<Habitacion> habitaciones = Inventario.getHabitaciones();
+		for (Habitacion habitacion : habitaciones) {
+			HashMap<String, ArrayList<Huesped>> hashMapReservasPerHabitacion = habitacion.getReservasProfundidad();
+			for (Entry<String, ArrayList<Huesped>> entry : hashMapReservasPerHabitacion.entrySet()) {
+				String date = entry.getKey();
+				ArrayList<Huesped> personasLista = entry.getValue();
+				int cantidadPersona = personasLista.size();
+				String[] partes = date.split("-");
+				int numMes = Integer.parseInt(partes[1]) - 1;
+				int huespuedes = lista.get((numMes * 2));
+				int reservas = lista.get((numMes * 2) + 1);
+				lista.add((numMes * 2), huespuedes + cantidadPersona);
+				lista.add((numMes * 2) + 1, reservas + 1);
+			}
+		}
+		return lista;
+	}
+
 	public static void registrarServicio(String ID, String servicioNombre, String pagadoEnElMomento) {
 		Servicio servicioBuscado = Inventario.buscarServicio(servicioNombre);
 		if (servicioBuscado.equals(null)) {
