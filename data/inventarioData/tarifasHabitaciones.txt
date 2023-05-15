@@ -611,6 +611,7 @@
 2024-03-02;sábado;suite;75000;
 2024-03-02;sábado;suite doble;90000;
 2024-03-02;sábado;estándar;43000;
+2023-01-09;lunes;suite;10000;
 2024-02-25;domingo;estándar;60000;
 2024-02-25;domingo;suite;75000;
 2024-02-25;domingo;suite doble;90000;
@@ -662,6 +663,7 @@
 2023-12-31;domingo;estándar;60000;
 2023-12-31;domingo;suite;75000;
 2023-12-31;domingo;suite doble;90000;
+2023-01-16;lunes;suite;10000;
 2024-02-21;miércoles;estándar;60000;
 2024-02-21;miércoles;suite;75000;
 2024-02-21;miércoles;suite doble;90000;
@@ -702,6 +704,7 @@
 2024-02-17;sábado;suite;75000;
 2024-02-17;sábado;suite doble;90000;
 2024-02-17;sábado;estándar;43000;
+2023-01-23;lunes;suite;10000;
 2024-02-19;lunes;estándar;60000;
 2024-02-19;lunes;suite;75000;
 2024-02-19;lunes;suite doble;90000;
@@ -744,6 +747,7 @@
 2024-02-02;viernes;suite;75000;
 2024-02-02;viernes;suite doble;90000;
 2024-02-02;viernes;estándar;43000;
+2023-01-30;lunes;suite;10000;
 2024-02-05;lunes;estándar;60000;
 2024-02-05;lunes;suite;75000;
 2024-02-05;lunes;suite doble;90000;

@@ -8,5 +8,6 @@ El servicio Pepsi, que tiene un costo de 4500 NO ha sido pagado.
 El servicio Bandeja Paisa, que tiene un costo de 18000 fue pagado exitosamente.
 El servicio Carne, que tiene un costo de 16000 fue pagado exitosamente.
 El servicio Caminata en el lago, que tiene un costo de 70000 NO ha sido pagado.
+El servicio Ski, que tiene un costo de 65000 fue pagado exitosamente.
 El huesped Anto Rudiger consumió:
 El servicio Spa, que tiene un costo de 750000 fue pagado exitosamente.
