@@ -167,8 +167,26 @@ public class Inventario {
 			String tieneCocina = partes[5];
 			int capacidadAdulto = Integer.parseInt(partes[6]);
 			int capacidadNino = Integer.parseInt(partes[7]);
+
+			// parte nueva
+			int tamano = Integer.parseInt(partes[8]);
+			String aireAcondicionado = partes[9];
+			String calefaccion = partes[10];
+			int tamanoCama = Integer.parseInt(partes[11]);
+			String TV = partes[12];
+			String cafetera = partes[13];
+			String ropaDeCamayTapetesHipo = partes[14];
+			String plancha = partes[15];
+			String secadoraDePelo = partes[16];
+			double voltajeAC = Double.parseDouble(partes[17]);
+			String tomaUSB_A = partes[18];
+			String tomaUSB_C = partes[19];
+			String incluyeDesayuno = partes[20];
+
 			Habitacion habitacion = new Habitacion(tipoHabitacion, ID, ubicacion, tieneBalcon, tieneVista, tieneCocina,
-					capacidadAdulto, capacidadNino);
+					capacidadAdulto, capacidadNino,
+					tamano, aireAcondicionado, calefaccion, tamanoCama, TV, cafetera, ropaDeCamayTapetesHipo,
+					plancha, secadoraDePelo, voltajeAC, tomaUSB_A, tomaUSB_C, incluyeDesayuno);
 			habitaciones.add(habitacion);
 		}
 		scan.close();
@@ -189,8 +207,27 @@ public class Inventario {
 			String tieneCocina = partes[5];
 			int capacidadAdulto = Integer.parseInt(partes[6]);
 			int capacidadNino = Integer.parseInt(partes[7]);
+
+			// parte nueva
+			int tamano = Integer.parseInt(partes[8]);
+			String aireAcondicionado = partes[9];
+			String calefaccion = partes[10];
+			int tamanoCama = Integer.parseInt(partes[11]);
+			String TV = partes[12];
+			String cafetera = partes[13];
+			String ropaDeCamayTapetesHipo = partes[14];
+			String plancha = partes[15];
+			String secadoraDePelo = partes[16];
+			double voltajeAC = Double.parseDouble(partes[17]);
+			String tomaUSB_A = partes[18];
+			String tomaUSB_C = partes[19];
+			String incluyeDesayuno = partes[20];
+
 			Habitacion habitacion = new Habitacion(tipoHabitacion, ID, ubicacion, tieneBalcon, tieneVista, tieneCocina,
-					capacidadAdulto, capacidadNino);
+					capacidadAdulto, capacidadNino,
+					tamano, aireAcondicionado, calefaccion, tamanoCama, TV, cafetera, ropaDeCamayTapetesHipo,
+					plancha, secadoraDePelo, voltajeAC, tomaUSB_A, tomaUSB_C, incluyeDesayuno);
+
 			habitaciones.add(habitacion);
 		}
 		scan.close();
@@ -655,8 +692,89 @@ public class Inventario {
 			}
 			String siete = String.valueOf(habitacion.getCapacidadAdulto());
 			String ocho = String.valueOf(habitacion.getCapacidadNino());
+			// ! parte nueva
+			// int tamano = Integer.parseInt(partes[8]);
+			// String aireAcondicionado = partes[9];
+			// String calefaccion = partes[10];
+			// int tamanoCama = Integer.parseInt(partes[11]);
+			// String TV = partes[12];
+			// String cafetera = partes[13];
+			String nueve = String.valueOf(habitacion.getTamano());
+			String diez = "";
+			if (habitacion.isAireAcondicionado()) {
+				diez = "Sí";
+			} else {
+				diez = "No";
+			}
+			String once = "";
+			if (habitacion.isCalefaccion()) {
+				once = "Sí";
+			} else {
+				once = "No";
+			}
+			String doce = String.valueOf(habitacion.getTamanoCama());
+			String trece = "";
+			if (habitacion.isTV()) {
+				trece = "Sí";
+			} else {
+				trece = "No";
+			}
+			String catorce = "";
+			if (habitacion.isCafetera()) {
+				catorce = "Sí";
+			} else {
+				catorce = "No";
+			}
+			// String ropaDeCamayTapetesHipo = partes[14];
+			// String plancha = partes[15];
+			// String secadoraDePelo = partes[16];
+			// double voltajeAC = Double.parseDouble(partes[17]);
+			// String tomaUSB_A = partes[18];
+			// String tomaUSB_C = partes[19];
+			// String incluyeDesayuno = partes[20];
+			String quince = "";
+			if (habitacion.isRopaDeCamayTapetesHipo()) {
+				quince = "Sí";
+			} else {
+				quince = "No";
+			}
+			String dieciseis = "";
+			if (habitacion.isPlancha()) {
+				dieciseis = "Sí";
+			} else {
+				dieciseis = "No";
+			}
+			String diecisiete = "";
+			if (habitacion.isSecadoraDePelo()) {
+				diecisiete = "Sí";
+			} else {
+				diecisiete = "No";
+			}
+			String dieciocho = String.valueOf(habitacion.getVoltajeAC());
+			String diecinueve = "";
+			if (habitacion.isTomaUSB_A()) {
+				diecinueve = "Sí";
+			} else {
+				diecinueve = "No";
+			}
+			String veinte = "";
+			if (habitacion.isTomaUSB_C()) {
+				veinte = "Sí";
+			} else {
+				veinte = "No";
+			}
+			String veintiuno = "";
+			if (habitacion.isIncluyeDesayuno()) {
+				veintiuno = "Sí";
+			} else {
+				veintiuno = "No";
+			}
+
 			String aMeter = uno + ";" + dos + ";" + tres + ";" + cuatro + ";" + cinco + ";" + seis + ";" + siete + ";"
-					+ ocho;
+					+ ocho + ";" + nueve + ";" + diez + ";" + once + ";" + doce + ";" + trece + ";" + catorce + ";"
+					+ quince + ";"
+					+ dieciseis + ";" + diecisiete + ";" + dieciocho + ";" + diecinueve + ";" + veinte + ";"
+					+ veintiuno;
 			aMeterGrande += aMeter;
 		}
 		return aMeterGrande;

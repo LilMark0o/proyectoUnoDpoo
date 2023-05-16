@@ -182,7 +182,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
     public static void showInfoFrameLargo(String[] text) {
         JFrame errorFrame = new JFrame("Info");
         errorFrame.setBackground(Color.WHITE);
-        errorFrame.setSize(400, 200);
+        errorFrame.setSize(400, 400);
         errorFrame.setLocationRelativeTo(null);
 
         JPanel textPanel = new JPanel();

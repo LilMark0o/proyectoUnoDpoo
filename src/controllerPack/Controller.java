@@ -57,12 +57,22 @@ public class Controller {
 	}
 
 	public static String cargarHabitacionManual(String tipoHabitacion, String ID, String ubicacion, String tieneBalcon,
-			String tieneVista, String tieneCocina, int capacidadAdulto, int capacidadNino)
+			String tieneVista, String tieneCocina, int capacidadAdulto, int capacidadNino, int tamano,
+			String aireAcondicionado,
+			String calefaccion, int tamanoCama,
+			String TV,
+			String cafetera,
+			String ropaDeCamayTapetesHipo,
+			String plancha, String secadoraDePelo,
+			double voltajeAC,
+			String tomaUSB_A, String tomaUSB_C, String incluyeDesayuno)
 			throws FileNotFoundException {
 
 		if (usuario.getRol().equals("administracion")) {
 			Habitacion habitacionNueva = new Habitacion(tipoHabitacion, ID, ubicacion, tieneBalcon, tieneVista,
-					tieneCocina, capacidadAdulto, capacidadNino);
+					tieneCocina, capacidadAdulto, capacidadNino,
+					tamano, aireAcondicionado, calefaccion, tamanoCama, TV, cafetera, ropaDeCamayTapetesHipo,
+					plancha, secadoraDePelo, voltajeAC, tomaUSB_A, tomaUSB_C, incluyeDesayuno);
 			if (Inventario.idYaExiste(ID)) {
 				return "El ID dado ya existe, vuelva a intentarlo con un ID nuevo";
 			} else {

@@ -112,8 +112,9 @@ public class Console {
 						int capacidadNino = Integer
 								.parseInt(Controller.input("¿Cúal es la capacidad de niños de la habitación?"));
 
-						System.out.println(Controller.cargarHabitacionManual(tipoHabitacion, ID, ubicacion,
-								tieneBalcon, tieneVista, tieneCocina, capacidadAdulto, capacidadNino));
+						// System.out.println(Controller.cargarHabitacionManual(tipoHabitacion, ID,
+						// ubicacion,
+						// tieneBalcon, tieneVista, tieneCocina, capacidadAdulto, capacidadNino));
 					} else {
 						System.out.println("Debes iniciar sesión primero");
 					}
