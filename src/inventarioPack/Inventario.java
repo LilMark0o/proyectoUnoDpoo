@@ -355,6 +355,42 @@ public class Inventario {
 		}
 	}
 
+	// ! acá me toca meter lo de los servicios para ver si ya existen, o no
+
+	public static boolean existeServicio(String nombreServicio) {
+		boolean existe = false;
+		for (Servicio servicio : servicios) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				existe = true;
+			}
+		}
+		return existe;
+	}
+
+	public static Servicio darServicio(String nombreServicio) {
+		Servicio servicioUtil = null;
+		for (Servicio servicio : servicios) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				servicioUtil = servicio;
+			}
+		}
+		return servicioUtil;
+	}
+
+	public static boolean registrarServicio(String nombreServicio, String cantidadPersonas, int precio) {
+		boolean existe = false;
+		for (Servicio servicio : servicios) {
+			if (servicio.getNombre().equals(nombreServicio)) {
+				existe = true;
+			}
+		}
+		if (!existe) {
+			Servicio servicio = new Servicio(nombreServicio, precio, cantidadPersonas);
+			servicios.add(servicio);
+		}
+		return existe;
+	}
+
 	public static void cambiarServicio(String nombreServicio, String cantidadPersonas, int precio) {
 		boolean existe = false;
 		for (Servicio servicio : servicios) {

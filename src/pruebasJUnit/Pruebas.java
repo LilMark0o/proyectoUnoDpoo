@@ -1,6 +1,8 @@
 package pruebasJUnit;
 
 import controllerPack.Controller;
+import inventarioPack.Inventario;
+import inventarioPack.Servicio;
 import serviciosPack.Huesped;
 
 import static org.junit.Assert.*;
@@ -75,6 +77,53 @@ public class Pruebas {
 
 	// ! acá estarán las pruebas unitarias sobre las funcionalidades para la carga
 	// ! de archivos
+
+	@Test
+	public void testServiceSuccessfully() {
+		try {
+			setUp();
+			String nombreServicio = "Spa Subacuatico marino místico";
+			String cantidadPersonas = "Grupal";
+			int precio = 45000;
+			Inventario.registrarServicio(nombreServicio, cantidadPersonas, precio);
+			boolean existe = Inventario.existeServicio(nombreServicio);
+			assertEquals("No se registró el servicio", existe, true);
+
+			// acá ya sabemos que existe el servicio, ahora
+			// vamos a ver si se guardaron TODOS los datos bien
+			Servicio servicio = Inventario.darServicio(nombreServicio);
+			assertEquals("El nombre está mal", servicio.getNombre(), nombreServicio);
+			assertEquals("La cantidad de personas está mal", servicio.getCantidadCliente(), cantidadPersonas);
+			assertEquals("El precio está mal", (int) servicio.getCosto(), precio);
+
+		} catch (Exception e) {
+			System.out.println(e);
+			fail("Hubo un error");
+		}
+	}
+
+	@Test
+	public void testServiceWrong() {
+		try {
+			setUp();
+			String nombreServicio = "Spa Subacuatico marino místico";
+			String cantidadPersonas = "Grupal";
+			int precio = 45000;
+			Inventario.registrarServicio(nombreServicio, cantidadPersonas, precio);
+			boolean existe = Inventario.existeServicio(nombreServicio);
+			assertEquals("No se registró el servicio", existe, true);
+
+			// acá ya sabemos que existe el servicio, ahora
+			// vamos a ver poner datos mal a propósito para ver si detecta el error
+			Servicio servicio = Inventario.darServicio(nombreServicio);
+			assertEquals("El nombre está mal", servicio.getNombre(), nombreServicio);
+			assertEquals("La cantidad de personas está mal", servicio.getCantidadCliente(), cantidadPersonas);
+			assertEquals("El precio está mal", (int) servicio.getCosto(), 20000);
+			// ! si la prueba de precio falla, está bien :D
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 
 	@Test
 	public void testFileChargeSuccessfully() {
