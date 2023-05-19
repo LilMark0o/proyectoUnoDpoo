@@ -505,7 +505,7 @@ public class Servicios {
 		}
 	}
 
-	private static boolean existeReservante(String ID) {
+	public static boolean existeReservante(String ID) {
 		boolean encontrado = false;
 		for (Reservante reservante : reservantes) {
 			if (reservante.getID().equals(ID)) {

@@ -151,6 +151,10 @@ public class Controller {
 		return txt;
 	}
 
+	public static boolean existeReservante(String ID) {
+		return Servicios.existeReservante(ID);
+	}
+
 	public static String generarFactura(String ID) throws IOException {
 		String txt = Servicios.generarFactura(ID);
 		return txt;
