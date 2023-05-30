@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import org.jfree.util.Log;
-
 import console.CambiarTarifa;
 import console.InventarioFrame;
 import inventarioPack.Habitacion;
