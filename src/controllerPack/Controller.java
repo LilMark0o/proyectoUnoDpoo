@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import org.jfree.util.Log;
+
 import console.CambiarTarifa;
 import console.InventarioFrame;
 import inventarioPack.Habitacion;
@@ -19,8 +21,21 @@ import loginApp.Login;
 public class Controller {
 	private static Usuario usuario;
 
+	public static void guardarCambios() {
+		try {
+			Inventario.guardarCambios();
+			Servicios.guardarCambios();
+			Login.guardarCambios();
+		} catch (IOException e) {
+		}
+	}
+
 	public static String devolverEmpleo() {
 		return usuario.getRol();
+	}
+
+	public static String devolverCorreo() {
+		return usuario.getLogIn();
 	}
 
 	public static void startApp() throws FileNotFoundException {
@@ -32,6 +47,24 @@ public class Controller {
 	public static boolean logIn(String userName, String password) {
 		usuario = Login.logIn(userName, password);
 		if (usuario != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean logInHuesped(String userName, String password) {
+		usuario = Login.logInHuesped(userName, password);
+		if (usuario != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean crearUsuarioHuesped(String userName, String password) {
+		if (Login.canCreateUser(userName, password)) {
+			Login.createUser(userName, password);
 			return true;
 		} else {
 			return false;
@@ -92,7 +125,7 @@ public class Controller {
 			} else {
 				String textoHabitacion = habitacion.toString();
 				String[] partes = textoHabitacion.split(", ");
-				InventarioFrame.showInfoFrameLargo(partes);
+				InventarioFrame.showInfoFrameLargo(partes, 400);
 			}
 		} else {
 			InventarioFrame.showInfoFrame("El ID dado no existe, vuelva a intentarlo con un ID nuevo");
@@ -191,6 +224,18 @@ public class Controller {
 			CambiarTarifa.showErrorFrame("Sólo un empleado de recepción puede llevar a cabo esta acción");
 			return "Sólo un empleado de administración puede llevar a cabo esta acción";
 		}
+	}
+
+	public static String generarReservaPorHuesped(String nombreReservante, int edad, String IDReservante,
+			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
+			String fechaFinal, String tipoDeHabitacion, ArrayList<Huesped> acompanantes) {
+		try {
+			return Servicios.generarReservaPorHuesped(nombreReservante, edad, IDReservante,
+					correoReservante, numeroCelular,
+					cantidadAcompanantes, fechaInicial, fechaFinal, tipoDeHabitacion, acompanantes);
+		} catch (InterruptedException e) {
+		}
+		return "";
 	}
 
 	public static int chismosearPrecio(String tipoHabitacion, String initialDate, String finalDate) {

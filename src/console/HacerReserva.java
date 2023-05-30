@@ -3,6 +3,7 @@ package console;
 import javax.swing.*;
 
 import controllerPack.Controller;
+import inventarioPack.Inventario;
 import serviciosPack.Huesped;
 import serviciosPack.Servicios;
 
@@ -14,12 +15,16 @@ import java.util.ArrayList;
 
 public class HacerReserva extends JFrame {
     private static final long serialVersionUID = 1L;
+    public JPanel panelContenedor;
+    public boolean realizadoPorUnHuesped = false;
     private JComboBox<String> comboTipo;
+    private JLabel labelTipo;
     private JTextField textIDReservante;
     private JTextField textDesde;
     private JTextField textHasta;
     private JTextField textIDNombre;
     private JTextField textIDEdad;
+    private JButton actualizar;
 
     private JTextField textCorreoReservante;
     private JTextField textCelularReservante;
@@ -53,14 +58,18 @@ public class HacerReserva extends JFrame {
         panelCentral.setLayout(new BorderLayout(10, 10)); // 10 píxeles de espacio entre componentes
         panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // margen de 10 píxeles en cada borde
 
-        JPanel panelContenedor = new JPanel(new GridLayout(9, 2, 10, 10)); // 5 filas, 2 columnas, 10 píxeles de espacio
-                                                                           // entre
+        panelContenedor = new JPanel(new GridLayout(10, 2, 10, 10)); // 5 filas, 2 columnas, 10 píxeles de
+                                                                     // espacio
+                                                                     // entre
         // filas y columnas
         panelContenedor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 10 pixels de espacio en los
                                                                                     // bordes
 
-        JLabel labelTipo = new JLabel("Tipo habitación: ");
-        comboTipo = new JComboBox<>(new String[] { "estándar", "suite", "suite doble" });
+        labelTipo = new JLabel("Tipo habitación: ");
+        JLabel labelEmpty = new JLabel("");
+        if (!realizadoPorUnHuesped) {
+            comboTipo = new JComboBox<>(new String[] { "estándar", "suite", "suite doble" });
+        }
         JLabel labelIDReservante = new JLabel("ID reservanter: ");
         textIDReservante = new JTextField();
         JLabel labelIDNombre = new JLabel("Nombre Reservante: ");
@@ -102,6 +111,14 @@ public class HacerReserva extends JFrame {
                 new PreguntarAcompanante();
             }
         });
+        // ? actulizar button
+        actualizar = new JButton("Actualizar");
+        actualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarOpciones();
+            }
+        });
         acompananteInfo.add(acompananteButton);
         panelContenedor.add(acompananteInfo);
         //
@@ -111,6 +128,13 @@ public class HacerReserva extends JFrame {
         panelContenedor.add(textHasta);
         panelContenedor.add(labelTipo);
         panelContenedor.add(comboTipo);
+        panelContenedor.add(labelTipo);
+        panelContenedor.add(comboTipo);
+        // ?
+        if (realizadoPorUnHuesped) {
+            panelContenedor.add(labelEmpty);
+            panelContenedor.add(actualizar);
+        }
         //
 
         panelCentral.add(panelContenedor, BorderLayout.CENTER);
@@ -136,13 +160,15 @@ public class HacerReserva extends JFrame {
                 String desde = textDesde.getText();
                 String hasta = textHasta.getText();
                 String tipo = (String) comboTipo.getSelectedItem();
-                System.out.println(Acompanantes);
-                if (Acompanantes == 0) {
-                    System.out.println("Error");
+                if (!realizadoPorUnHuesped) {
+                    Controller.generarReserva(NombreReservante, edadReservante, IDReservante,
+                            CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo,
+                            personitasImportadas);
+                } else {
+                    Controller.generarReservaPorHuesped(NombreReservante, edadReservante, IDReservante,
+                            CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo,
+                            personitasImportadas);
                 }
-
-                Controller.generarReserva(NombreReservante, edadReservante, IDReservante,
-                        CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo, personitasImportadas);
             }
         });
 
@@ -151,10 +177,7 @@ public class HacerReserva extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Servicios.guardarCambios();
-                } catch (IOException e1) {
-                }
+                Controller.guardarCambios();
                 dispose();
             }
         });
@@ -169,4 +192,34 @@ public class HacerReserva extends JFrame {
         acompanantesLabelText += 1;
         acompananteLabel.setText("Acompañantes: " + acompanantesLabelText);
     }
+
+    public void actualizarCorreo(String correo) {
+        textCorreoReservante.setText(correo);
+    }
+
+    public void actualizarHabitaciones() {
+        labelTipo.setText("ID habitación: ");
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        model.addElement("no hay fechas escogidas");
+        comboTipo.setModel(model);
+        JLabel labelEmpty = new JLabel("");
+        panelContenedor.add(labelEmpty);
+        panelContenedor.add(actualizar);
+
+    }
+
+    public void actualizarOpciones() {
+        if (textDesde.getText() == "" || textHasta.getText() == "") {
+            comboTipo.setSelectedItem("no hay fechas escogidas");
+        } else {
+            DefaultComboBoxModel<String> modelActualizado = new DefaultComboBoxModel<>();
+            ArrayList<String> IDs = Inventario.queHabitacionesHay(textDesde.getText(), textHasta.getText());
+            for (String id : IDs) {
+                modelActualizado.addElement(id);
+            }
+            comboTipo.setModel(modelActualizado);
+        }
+    }
+
 }

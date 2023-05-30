@@ -129,7 +129,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
                 String[] message = { "Esta opción sobre-escribe (si ya existe)",
                         " o crea un elemento nuevo en el menú." };
                 // ? new VentanaQueCorresponde
-                showInfoFrameLargo(message);
+                showInfoFrameLargo(message, 400);
             } else {
                 showErrorFrame("Solo administración tiene acceso");
             }
@@ -141,7 +141,7 @@ public class InventarioFrame extends JFrame implements ActionListener {
                 String[] message = { "Esta opción sobre-escribe (si ya existe)",
                         " o crea un elemento nuevo en los servicios." };
                 // ? new VentanaQueCorresponde
-                showInfoFrameLargo(message);
+                showInfoFrameLargo(message, 400);
             } else {
                 showErrorFrame("Solo administración tiene acceso");
             }
@@ -179,10 +179,10 @@ public class InventarioFrame extends JFrame implements ActionListener {
         errorFrame.setVisible(true);
     }
 
-    public static void showInfoFrameLargo(String[] text) {
+    public static void showInfoFrameLargo(String[] text, int height) {
         JFrame errorFrame = new JFrame("Info");
         errorFrame.setBackground(Color.WHITE);
-        errorFrame.setSize(400, 400);
+        errorFrame.setSize(400, height);
         errorFrame.setLocationRelativeTo(null);
 
         JPanel textPanel = new JPanel();

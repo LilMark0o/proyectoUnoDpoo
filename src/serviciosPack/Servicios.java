@@ -336,7 +336,7 @@ public class Servicios {
 					}
 					Servicios.hacerReserva(personitas);
 					String[] mensajeDesintegrado = mensaje.split("\n");
-					InventarioFrame.showInfoFrameLargo(mensajeDesintegrado);
+					InventarioFrame.showInfoFrameLargo(mensajeDesintegrado, 400);
 					return mensaje;
 				}
 			}
@@ -344,6 +344,42 @@ public class Servicios {
 			CambiarTarifa.showErrorFrame("No hay habitaciones de este tipo disponibles para estas fechas");
 			return "No hay habitaciones de este tipo disponibles para estas fechas, lo sentimos :(";
 		}
+	}
+
+	public static String generarReservaPorHuesped(String nombreReservante, int edad, String IDReservante,
+			String correoReservante, Long numeroCelular, int cantidadAcompanantes, String fechaInicial,
+			String fechaFinal, String IDHabitacion, ArrayList<Huesped> acompanantes)
+			throws InterruptedException {
+		// ArrayList<String> habitacionesVacias =
+		// Inventario.hayHabitacion(tipoDeHabitacion, fechaInicial, fechaFinal);
+		String mensaje = "Se le asignó exitosamente el ID-" + IDHabitacion + " de habitación:";
+		if (IDHabitacion != "") {
+			int IdGrupal = Servicios.generarIdGrupo();
+			Reservante reservante = new Reservante(nombreReservante, edad, IDReservante, correoReservante,
+					numeroCelular, cantidadAcompanantes, IdGrupal, fechaInicial, fechaFinal);
+			ArrayList<Huesped> personitas = new ArrayList<Huesped>();
+			personitas.add(reservante);
+			for (Huesped persona : acompanantes) {
+				persona.setIDgrupo(IdGrupal);
+				personitas.add(persona);
+			}
+
+			reservante.agregarHabitacion(IDHabitacion);
+			Habitacion habitacion = Inventario.getHabitacionPerID(IDHabitacion);
+			int costo = Controller.chismosearPrecio(habitacion.getTipoHabitacion(), fechaInicial, fechaFinal);
+			if (costo == -1) {
+				CambiarTarifa.showErrorFrame("No hay tarifas disponibles para estas fechas");
+				return "No hay tarifas disponibles para estas fechas, lo sentimos :(";
+			} else {
+				mensaje += "\n" + "Su estadía en el hotel costará: $" + String.valueOf(costo);
+				habitacion.hacerReserva(fechaInicial, fechaFinal, personitas);
+
+				Servicios.hacerReserva(personitas);
+				String[] mensajeDesintegrado = mensaje.split("\n");
+				InventarioFrame.showInfoFrameLargo(mensajeDesintegrado, 200);
+			}
+		}
+		return mensaje;
 	}
 
 	private static String textoGuardarServicios() {

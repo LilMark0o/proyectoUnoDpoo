@@ -536,6 +536,34 @@ public class Inventario {
 		}
 	}
 
+	public static ArrayList<String> queHabitacionesHay(String initialDate, String finalDate) {
+		ArrayList<String> habitacionesUtiles = new ArrayList<String>();
+		ArrayList<String> fechasNecesarias = new ArrayList<String>();
+		Calendar initialCal = string2Calendar(initialDate);
+		Calendar finalCal = string2Calendar(finalDate);
+
+		for (Calendar date = initialCal; date.compareTo(finalCal) <= 0; date.add(Calendar.DATE, 1)) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateStr = sdf.format(date.getTime()); // acá ya está como YYYY-MM-dd
+			fechasNecesarias.add(dateStr);
+		}
+		if (!(fechasNecesarias.contains(initialDate))) {
+			fechasNecesarias.add(initialDate);
+		}
+		if (!(fechasNecesarias.contains(finalDate))) {
+			fechasNecesarias.add(finalDate);
+		}
+
+		// ? ya tenemos un arrayList con todas las fechas necesarias
+
+		for (Habitacion habitacion : habitaciones) {
+			if (habitacion.sePuedeReservar(fechasNecesarias)) {
+				habitacionesUtiles.add(habitacion.getID());
+			}
+		}
+		return habitacionesUtiles;
+	}
+
 	public static ArrayList<String> hayHabitacion(String tipoHabitacion, String initialDate, String finalDate) {
 		ArrayList<String> habitacionesUtiles = new ArrayList<String>();
 		ArrayList<String> fechasNecesarias = new ArrayList<String>();
