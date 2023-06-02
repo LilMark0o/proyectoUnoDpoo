@@ -1,0 +1,4 @@
+ApplePay
+PayU
+GooglePay
+[PayPal]

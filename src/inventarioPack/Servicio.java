@@ -7,7 +7,7 @@ public class Servicio {
 	protected String textoFactura;
 	protected String cantidadCliente;
 
-	Servicio(String nombre, Integer costo, String cantidadCliente) {
+	public Servicio(String nombre, Integer costo, String cantidadCliente) {
 		this.nombre = nombre;
 		this.costo = costo;
 		this.pagado = false;

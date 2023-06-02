@@ -56,6 +56,37 @@ public class Servicios {
 		return lista;
 	}
 
+	public static int registrarServicioHabitacion(String ID, String pagadoEnElMomento, String desde, String hasta) {
+		Reservante reservante = getReservantePerID(ID);
+		ArrayList<String> habitaciones = reservante.getIDHabitaciones();
+		int costo = 0;
+		for (String IDHabitacion : habitaciones) {
+			Habitacion habitacionRealG = Inventario.getHabitacionPerID(IDHabitacion);
+			String tipo = habitacionRealG.getTipoHabitacion();
+			costo = Controller.chismosearPrecio(tipo, desde, hasta);
+			int costoFinal = (int) ((int) costo * 0.9);
+
+			boolean pagado = false;
+			if (pagadoEnElMomento.equals("Sí")) {
+				pagado = true;
+			}
+			Servicio servicioBuscado = new Servicio("Reserva-" + desde + "-" + hasta, costoFinal, "Grupal");
+			servicioBuscado.setPagado(pagado);
+			Inventario.anadirServicio(servicioBuscado);
+
+			if (registroServicios.containsKey(ID)) {
+				ArrayList<Servicio> servicios = registroServicios.get(ID);
+				servicios.add(servicioBuscado);
+				registroServicios.put(ID, servicios);
+			} else {
+				ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+				servicios.add(servicioBuscado);
+				registroServicios.put(ID, servicios);
+			}
+		}
+		return costo;
+	}
+
 	public static void registrarServicio(String ID, String servicioNombre, String pagadoEnElMomento) {
 		Servicio servicioBuscado = Inventario.buscarServicio(servicioNombre);
 		if (servicioBuscado.equals(null)) {
@@ -551,7 +582,7 @@ public class Servicios {
 		return encontrado;
 	}
 
-	private static Reservante getReservantePerID(String ID) {
+	public static Reservante getReservantePerID(String ID) {
 		Reservante encontrado = null;
 		for (Reservante reservante : reservantes) {
 			if (reservante.getID().equals(ID)) {
@@ -643,5 +674,92 @@ public class Servicios {
 			vamosBien = false;
 		}
 		return vamosBien;
+	}
+
+	public static boolean checkOutSolido(String IDReservante) {
+		// bueno, vamo' a trabajar
+		boolean vamosBien = true;
+		if (existeReservante(IDReservante)) {
+			Reservante reservante = getReservantePerID(IDReservante);
+			ArrayList<String> IDhabitaciones = reservante.getIDHabitaciones();
+			int IDgrupo = reservante.getIDgrupo();
+			ArrayList<Huesped> personitas = grupos.get(IDgrupo);
+			for (String IDHabitacion : IDhabitaciones) {
+				if (registroServicios.containsKey(IDHabitacion)) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(IDHabitacion);
+					if (serviciosDelUsuario.size() != 0) {
+						for (Servicio servicio : serviciosDelUsuario) {
+							if (!(servicio.isPagado())) {
+								servicio.setPagado(true);
+							}
+						}
+					}
+				}
+			}
+			for (Huesped personita : personitas) {
+				String IDpersonita = personita.getID();
+				if (registroServicios.containsKey(IDpersonita)) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(IDpersonita);
+					if (serviciosDelUsuario.size() != 0) {
+						for (Servicio servicio : serviciosDelUsuario) {
+							if (!(servicio.isPagado())) {
+								servicio.setPagado(true);
+							}
+						}
+					}
+				}
+			}
+			if (vamosBien) {
+				grupos.remove(IDgrupo);
+				for (String IDHabitacion : IDhabitaciones) {
+					Habitacion habitacion = Inventario.getHabitacionPerID(IDHabitacion);
+					habitacion.cancelarReserva(reservante);
+				}
+				reservantes.remove(reservante);
+				for (Huesped personita : personitas) {
+					huespeds.remove(personita);
+				}
+			}
+
+		} else {
+			vamosBien = false;
+		}
+		return vamosBien;
+	}
+
+	public static int cuentaCobro(String IDReservante) {
+		int cobroTotal = 0;
+		if (existeReservante(IDReservante)) {
+			Reservante reservante = getReservantePerID(IDReservante);
+			ArrayList<String> IDhabitaciones = reservante.getIDHabitaciones();
+			int IDgrupo = reservante.getIDgrupo();
+			ArrayList<Huesped> personitas = grupos.get(IDgrupo);
+			for (String IDHabitacion : IDhabitaciones) {
+				if (registroServicios.containsKey(IDHabitacion)) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(IDHabitacion);
+					if (serviciosDelUsuario.size() != 0) {
+						for (Servicio servicio : serviciosDelUsuario) {
+							if (!(servicio.isPagado())) {
+								cobroTotal += servicio.getCosto();
+							}
+						}
+					}
+				}
+			}
+			for (Huesped personita : personitas) {
+				String IDpersonita = personita.getID();
+				if (registroServicios.containsKey(IDpersonita)) {
+					ArrayList<Servicio> serviciosDelUsuario = registroServicios.get(IDpersonita);
+					if (serviciosDelUsuario.size() != 0) {
+						for (Servicio servicio : serviciosDelUsuario) {
+							if (!(servicio.isPagado())) {
+								cobroTotal += servicio.getCosto();
+							}
+						}
+					}
+				}
+			}
+		}
+		return cobroTotal;
 	}
 }

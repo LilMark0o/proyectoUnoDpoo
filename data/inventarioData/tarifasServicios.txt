@@ -4,3 +4,6 @@ Guía Turístico;40000;grupal
 Alquilar piscina;250000;grupal
 Caminata en el lago;70000;grupal
 Ping Pong Sub-Acuatico;60000;Personal
+Reserva-2023-03-01-2023-03-05;135000;Grupal
+Reserva-2023-03-01-2023-03-05;135000;Grupal
+Reserva-2023-03-06-2023-03-09;108000;Grupal

@@ -1,0 +1,7 @@
+-----  Factura a nombre de Camilo -----
+---  Con fecha de ingreso de 2023-03-06 ---
+---  Y fecha de salida de 2023-03-09 ---
+En su estadía se reservó la habitación de tipo estándar con ID305
+La tarifa pagada fue de: $120000
+El huesped Camilo consumió:
+El servicio Reserva-2023-03-06-2023-03-09, que tiene un costo de 108000 NO ha sido pagado.

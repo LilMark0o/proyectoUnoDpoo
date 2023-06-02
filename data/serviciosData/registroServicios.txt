@@ -1,4 +1,5 @@
 312;Guía Turístico;Sí
+1239821931;Reserva-2023-03-06-2023-03-09;Sí
 303;Ski;Sí
 303;Spa;Sí
 512;Pepsi;No
@@ -6,6 +7,7 @@
 512;Carne;Sí
 512;Caminata en el lago;No
 512;Ski;Sí
+2871783;Reserva-2023-03-01-2023-03-05;Sí
 701;Ski;Sí
 701;CocaCola;Sí
 701;Huevos;Sí
@@ -15,4 +17,5 @@
 23931203;Spa;Sí
 10238218;Ski;Sí
 10238218;Spa;Sí
-10238218;Alquilar piscina;No
+10238218;Alquilar piscina;Sí
+7218381;Reserva-2023-03-01-2023-03-05;Sí

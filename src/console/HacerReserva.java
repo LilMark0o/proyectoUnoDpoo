@@ -167,6 +167,7 @@ public class HacerReserva extends JFrame {
                             CorreoReservante, CelularReservante, Acompanantes, desde, hasta, tipo,
                             personitasImportadas);
                 }
+                new PagoReserva(NombreReservante, IDReservante, desde, hasta);
             }
         });
 

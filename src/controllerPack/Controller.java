@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import console.CambiarTarifa;
 import console.InventarioFrame;
+import console.PagoReserva;
 import inventarioPack.Habitacion;
 import inventarioPack.Inventario;
 import loginApp.Login;
@@ -67,6 +68,10 @@ public class Controller {
 		} else {
 			return false;
 		}
+	}
+
+	public static ArrayList<String> leerPlataformas() throws FileNotFoundException {
+		return Inventario.leerPlataformas();
 	}
 
 	public static void logOut() {
@@ -163,6 +168,10 @@ public class Controller {
 		Servicios.registrarServicio(ID, nombreServicio, pagado);
 	}
 
+	public static int cargarServicioHabitacion(String ID, String pagado, String desde, String hasta) {
+		return Servicios.registrarServicioHabitacion(ID, pagado, desde, hasta);
+	}
+
 	public static void cargarServicioRestaurante(String ID, String nombreServicio, String pagado) {
 		Servicios.registrarServicioRestaurante(ID, nombreServicio, pagado);
 	}
@@ -198,7 +207,14 @@ public class Controller {
 				CambiarTarifa.showSuccessFrame("Check-out hecho exitosamente, ¡Vuelva pronto!");
 				return "Check-out hecho exitosamente, ¡Vuelva pronto!";
 			} else {
-				CambiarTarifa.showErrorFrame("No se puede realizar el Check-out");
+				// !ahora vamos a ponerlo a pagar >:]
+				// CambiarTarifa.showErrorFrame("No se puede realizar el Check-out");
+				int cobroAHacer = Servicios.cuentaCobro(IDReservante);
+				serviciosPack.Reservante reservante = Servicios.getReservantePerID(IDReservante);
+
+				PagoReserva ventana = new PagoReserva(reservante.getNombre(), IDReservante, reservante.getFechaInicio(),
+						reservante.getFechaFin());
+				ventana.cobroAHacer = cobroAHacer;
 				return "No se puede realizar el Check-out, revise si todos sus servicios están pagos, o si los ID está bien escrito";
 			}
 		} else {

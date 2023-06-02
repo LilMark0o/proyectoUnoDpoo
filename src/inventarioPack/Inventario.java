@@ -33,8 +33,26 @@ public class Inventario {
 		cargarCamas();
 	}
 
+	public static void anadirServicio(Servicio servicio) {
+		servicios.add(servicio);
+	}
+
 	public static void meterHabitacion(Habitacion habitacion) {
 		habitaciones.add(habitacion);
+	}
+
+	public static ArrayList<String> leerPlataformas() throws FileNotFoundException {
+		ArrayList<String> plataformas = new ArrayList<String>();
+		String archivo = System.getProperty("user.dir") + "/data/bankingData/" + "bancos.txt";
+		File file = new File(archivo);
+		Scanner scan = new Scanner(file);
+		while (scan.hasNextLine()) {
+			String plataforma = scan.nextLine();
+			plataformas.add(plataforma);
+		}
+		scan.close();
+
+		return plataformas;
 	}
 
 	public static ArrayList<Habitacion> getHabitaciones() {
@@ -81,10 +99,12 @@ public class Inventario {
 		String txt = "";
 		txt += "Los servicios consisten de: ";
 		for (Servicio servicio : servicios) {
-			txt += "\n";
-			txt += "Servicio: " + servicio.getNombre();
-			txt += ", con un costo de $" + String.valueOf(servicio.getCosto());
-			txt += ". Este servicio es una actividad " + servicio.getCantidadCliente();
+			if (!(servicio.getNombre().contains("Reserva"))) {
+				txt += "\n";
+				txt += "Servicio: " + servicio.getNombre();
+				txt += ", con un costo de $" + String.valueOf(servicio.getCosto());
+				txt += ". Este servicio es una actividad " + servicio.getCantidadCliente();
+			}
 		}
 		txt += "\n";
 		return txt;
