@@ -7,3 +7,9 @@ Ping Pong Sub-Acuatico;60000;Personal
 Reserva-2023-03-01-2023-03-05;135000;Grupal
 Reserva-2023-03-01-2023-03-05;135000;Grupal
 Reserva-2023-03-06-2023-03-09;108000;Grupal
+Parqueadero;0;Grupal
+Zona Húmeda;65000;Grupal
+BBQ;80000;Grupal
+Mascotas;30000;Personal
+Reserva-2023-03-01-2023-03-05;0;Grupal
+Reserva-2023-03-01-2023-03-05;0;Grupal

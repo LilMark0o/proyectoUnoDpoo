@@ -128,7 +128,7 @@ public class RecepcionFrame extends JFrame implements ActionListener {
                 CambiarTarifa.showErrorFrame("Solo recepcion tiene acceso");
             }
         } else if (e.getSource() == mostrarGrafica) {
-            new DiagramaDeBarras();
+            new GraficasMenu();
         }
     }
 

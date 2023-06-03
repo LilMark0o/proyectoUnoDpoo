@@ -2,6 +2,7 @@ package serviciosPack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +31,68 @@ public class Servicios {
 		cargarReservantes();
 		huespeds = new ArrayList<Huesped>();
 		cargarHuespedes();
+	}
+
+	public static HashMap<String, Integer> dataForGraph() {
+		HashMap<String, Integer> dataSet = new HashMap<String, Integer>();
+		for (Entry<String, ArrayList<Servicio>> entry : registroServicios.entrySet()) {
+			ArrayList<Servicio> personasLista = entry.getValue();
+			for (Servicio servicio : personasLista) {
+				if (!(dataSet.containsKey(servicio.getNombre()))) {
+					dataSet.put(servicio.getNombre(), 0);
+				}
+				Integer SumaVieja = dataSet.get(servicio.getNombre());
+				SumaVieja += servicio.getCosto();
+				dataSet.put(servicio.getNombre(), SumaVieja);
+			}
+		}
+		return dataSet;
+	}
+
+	public static HashMap<String, Integer> dataForGraphZwei() {
+		HashMap<String, Integer> dataSet = new HashMap<String, Integer>();
+		for (Entry<String, ArrayList<Servicio>> entry : registroServicios.entrySet()) {
+			ArrayList<Servicio> personasLista = entry.getValue();
+			for (Servicio servicio : personasLista) {
+				if (!(dataSet.containsKey(servicio.getNombre()))) {
+					dataSet.put(servicio.getNombre(), 0);
+				}
+				Integer SumaVieja = dataSet.get(servicio.getNombre());
+				SumaVieja += 1;
+				dataSet.put(servicio.getNombre(), SumaVieja);
+			}
+		}
+		return dataSet;
+	}
+
+	private static String textoIndicador() {
+		String textoFinal = "";
+		float promedioEdades = 0;
+		int cantidadHuespeds = 0;
+		int cantidadReservantes = 0;
+		for (Huesped huesped : huespeds) {
+			promedioEdades += huesped.getEdad();
+			cantidadHuespeds += 1;
+		}
+		for (Reservante reservante : reservantes) {
+			promedioEdades += reservante.getEdad();
+			cantidadReservantes += 1;
+		}
+		promedioEdades = promedioEdades / (cantidadReservantes + cantidadHuespeds);
+		float promedioPersonasPerReserva = (cantidadReservantes + cantidadHuespeds) / cantidadReservantes;
+		textoFinal = "En el hotel, el promedio de edad entre los huespeds es de "
+				+ Integer.toString(Math.round(promedioEdades * 10) / 10) + " años de edad.\n";
+		textoFinal += "Por otro lado, el promedio de huespeds (contando al reservante) en cada reserva es de "
+				+ Integer.toString(Math.round(promedioPersonasPerReserva * 10) / 10) + " personas";
+		return textoFinal;
+	}
+
+	public static void escribirIndicador() throws IOException {
+		String textoActualizado = textoIndicador();
+		String archivo = System.getProperty("user.dir") + "/data/indicadores/" + "indicador.txt";
+		FileWriter writer = new FileWriter(archivo);
+		writer.write(textoActualizado);
+		writer.close();
 	}
 
 	public static ArrayList<Integer> dataForChart() {

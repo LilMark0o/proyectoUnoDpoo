@@ -1,8 +1,7 @@
 312;Guía Turístico;Sí
 1239821931;Reserva-2023-03-06-2023-03-09;Sí
 303;Ski;Sí
-303;Spa;Sí
-512;Pepsi;No
+512;Pepsi;Sí
 512;Bandeja Paisa;Sí
 512;Carne;Sí
 512;Caminata en el lago;No
@@ -12,9 +11,10 @@
 701;CocaCola;Sí
 701;Huevos;Sí
 9999;Ski;Sí
-804;Spa;Sí
+9999;Pepsi;Sí
 804;Ski;Sí
-23931203;Spa;Sí
+12838712873;Reserva-2023-03-01-2023-03-05;Sí
+12838712873;Reserva-2023-03-01-2023-03-05;Sí
 10238218;Ski;Sí
 10238218;Spa;Sí
 10238218;Alquilar piscina;Sí
